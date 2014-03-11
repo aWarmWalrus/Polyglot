@@ -10,7 +10,7 @@ public class ParserFactory {
 	 * @return
 	 */
 	public static Parser getParser() {
-		//TODO
-		return null;
+		Parser over9000 = new ParserImpl();
+		return over9000;
 	}
 }

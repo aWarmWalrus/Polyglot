@@ -1,22 +1,12 @@
 package student;
 
-import java.util.ArrayList;
-
-/**
- * A representation of a critter program.
- *
- */
-public class Program implements Node {
-
-	ArrayList<Rule> rules;
+public class Update implements Node{
 	
-	public Program(){
-		rules = new ArrayList<Rule>();
-		
-	}
+	
 	
 	@Override
 	public int size() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -29,7 +19,7 @@ public class Program implements Node {
 	@Override
 	public void prettyPrint(StringBuffer sb) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

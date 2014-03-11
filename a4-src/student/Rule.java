@@ -1,12 +1,24 @@
 package student;
 
+import java.util.ArrayList;
+
+import java.util.ArrayList;
+
 /**
  * A representation of a critter rule.
  */
 public class Rule implements Node {
-
+	
     private Condition condition;
     // how to represent the command?
+    private ArrayList<Update> updates;
+    private Action action;
+    
+    public StringBuilder ruleString;
+    
+    public Rule(StringBuilder s) {
+    	ruleString = s;
+    }
 
 	@Override
 	public int size() {
