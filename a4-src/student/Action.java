@@ -1,5 +1,6 @@
 package student;
 
-public class Action {
-
+public enum Action {
+	WAIT, FORWARD, BACKWARD, LEFT, RIGHT, EAT, ATTACK, 
+	GROW, BUD, MATE, TAG, SERVE 
 }
