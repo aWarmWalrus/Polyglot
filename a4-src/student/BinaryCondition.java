@@ -4,7 +4,7 @@ package student;
  * A representation of a binary Boolean condition: 'and' or 'or'
  *
  */
-public class BinaryCondition extends Condition {
+public class BinaryCondition implements Condition {
 	
 	/**
 	 * Create an AST representation of l op r.
@@ -14,7 +14,6 @@ public class BinaryCondition extends Condition {
 	 */
 	public BinaryCondition(Condition l, BinaryConditionOperator op, Condition r) {
 		//TODO
-		super(null);
 	}
 
 	@Override
