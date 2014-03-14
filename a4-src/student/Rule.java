@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Rule implements Node {
 	
-    private Condition condition;
+    protected Condition condition;
     // how to represent the command?
     private ArrayList<Update> updates;
     private Action action;

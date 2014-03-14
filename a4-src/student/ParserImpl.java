@@ -60,6 +60,7 @@ public class ParserImpl implements Parser {
 			} else {
 				Rule aRule = new Rule(ruleTokens);
 				program.rules.add(aRule);
+				System.out.println(ruleTokens.toString());
 				ruleTokens = new ArrayList<Token>();
 			}
 		}
@@ -73,16 +74,23 @@ public class ParserImpl implements Parser {
 	 * @throws SyntaxError
 	 */
 	public Rule parseRule(Rule rule) throws SyntaxError {
+		ArrayList<Token> left = new ArrayList<Token>();
+		ArrayList<Token> right = new ArrayList<Token>();
 		for(Token i : rule.tokens){
-			ArrayList<Token> someTokens = new ArrayList<Token>();
 			int arrows = 0;
 			if (arrows == 2) throw new SyntaxError();
-			if(i.getType() != Token.ARR && arrows < 2){
-				someTokens.add(i);
-			} else if (i.getType() == Token.ARR && arrows < 2){
-				Condition aCondition = new Condition(someTokens);
+			if(i.getType() != Token.ARR){
+				if (arrows == 0) left.add(i);
+				if (arrows == 1) right.add(i);
+			} else if (i.getType() == Token.ARR){
+				rule.condition = new Condition(left);
+				System.out.println(left.toString());
+				arrows++;
+			} else {
+				throw new SyntaxError();
 			}
 		}
+		
 		return rule;
 	}
 
