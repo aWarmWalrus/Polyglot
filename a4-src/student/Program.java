@@ -12,7 +12,6 @@ public class Program implements Node {
 	
 	public Program(){
 		rules = new ArrayList<Rule>();
-		
 	}
 	
 	@Override

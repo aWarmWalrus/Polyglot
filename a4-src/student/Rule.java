@@ -14,10 +14,10 @@ public class Rule implements Node {
     private ArrayList<Update> updates;
     private Action action;
     
-    public StringBuilder ruleString;
+    public ArrayList<Token> tokens;
     
-    public Rule(StringBuilder s) {
-    	ruleString = s;
+    public Rule(ArrayList<Token> tokens) {
+    	this.tokens = tokens;
     }
 
 	@Override
