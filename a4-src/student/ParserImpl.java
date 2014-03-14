@@ -68,26 +68,25 @@ public class ParserImpl implements Parser {
 	}
 	
 	/**
-	 * Um. Yeah so this is a shot in the dark, but parseRule() will take a Rule
-	 * object and parse it. 
+	 * So the idea right now is that all our parsers know what
+	 * they're parsing because we will pass an array
+	 * of tokens to each node. I guess this is a bad idea?
 	 * @return
 	 * @throws SyntaxError
 	 */
 	public Rule parseRule(Rule rule) throws SyntaxError {
 		ArrayList<Token> left = new ArrayList<Token>();
 		ArrayList<Token> right = new ArrayList<Token>();
+		int arrows = 0;
 		for(Token i : rule.tokens){
-			int arrows = 0;
-			if (arrows == 2) throw new SyntaxError();
 			if(i.getType() != Token.ARR){
 				if (arrows == 0) left.add(i);
 				if (arrows == 1) right.add(i);
 			} else if (i.getType() == Token.ARR){
-				rule.condition = new Condition(left);
+				rule.condition = new Relation();
 				System.out.println(left.toString());
 				arrows++;
-			} else {
-				throw new SyntaxError();
+				if (arrows == 2) throw new SyntaxError();
 			}
 		}
 		

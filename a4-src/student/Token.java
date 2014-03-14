@@ -19,6 +19,7 @@ public class Token {
 	public static final int BUD = 18;
 	public static final int MATE = 19;
 	public static final int TAG = 20;
+	public static final int SERVE = 21;
 	public static final int OR = 30;
 	public static final int AND = 31;
 	public static final int LT = 32;
@@ -147,6 +148,7 @@ public class Token {
 		case RIGHT: return "right";
 		case EAT: return "eat";
 		case ATTACK: return "attack";
+		case SERVE: return "serve";
 		case TAG: return "tag";
 		case GROW: return "grow";
 		case BUD: return "bud";

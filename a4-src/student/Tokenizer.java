@@ -217,6 +217,8 @@ public class Tokenizer implements Iterator<Token> {
 			setNextToken(Token.RIGHT);
 		else if (id.equals("eat"))
 			setNextToken(Token.EAT);
+		else if (id.equals("serve"))
+			setNextToken(Token.SERVE);
 		else if (id.equals("attack"))
 			setNextToken(Token.ATTACK);
 		else if (id.equals("tag"))
