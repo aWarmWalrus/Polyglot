@@ -16,7 +16,7 @@ public class Update extends AbstractNode{
 	@Override
 	public int size() {
 		//end of the tree; update will only assign to a mem[] location
-		mutationNum++;
+//		mutationNum++;
 		return 1;
 	}
 

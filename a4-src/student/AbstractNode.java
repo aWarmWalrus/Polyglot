@@ -8,13 +8,13 @@ import java.util.Random;
 public class AbstractNode implements Node{
 	
 	//the children of this particular Node are stored here
-	ArrayList<?> children; 
+//	ArrayList<?> children; 
 	
 	//random object for mutations
-	Random rand;
+//	Random rand;
 	
 	//for mutation: the size accumulator
-	int mutationNum = 0;
+//	int mutationNum = 0;
 	
 	//this should never actually be called
 	@Override
@@ -33,13 +33,13 @@ public class AbstractNode implements Node{
 		return null;
 	}
 	
-	public Node mutateHelper() {
-		int randNum = 0;
-		randNum = rand.nextInt(size());
-		
-		//next we walk down the tree 
-		return null;
-	}
+//	public Node mutateHelper() {
+//		int randNum = 0;
+//		randNum = rand.nextInt(size());
+//		
+//		//next we walk down the tree 
+//		return null;
+//	}
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {

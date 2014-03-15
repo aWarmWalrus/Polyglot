@@ -19,7 +19,7 @@ public class Program extends AbstractNode {
 		int accumulator = 0;
 		for (int i = 0; i < rules.size(); i++) {
 			accumulator += rules.get(i).size();
-			mutationNum ++;
+//			mutationNum ++;
 		}
 		return accumulator;
 	}

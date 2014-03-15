@@ -12,14 +12,31 @@ public class Rule extends AbstractNode {
     protected Condition condition;
     // how to represent the command?
     private ArrayList<Update> updates;
-
     private Action action;
+    private ActionSwitch actionSwitch;
 
+    
+    /**
+     * Constructor for a Rule Object
+     */
+    public Rule() {
+    	//requires no arguments
+    }
+    
+    
+    /**
+     * Constructor for a Rule Object
+     * @param cond
+     */
+    public Rule(Condition condition, ArrayList<Update> updateList) {
+    	this.condition = condition; //another way to set the Condition
+    	updates = updateList;
+    }
+    
     public void setCondition(Condition cond){
     	condition = cond;
     }
 
-    private ActionSwitch actionSwitch;
 
     public void setAction(Action action){
     	this.action = action;
@@ -28,6 +45,8 @@ public class Rule extends AbstractNode {
     public void addUpdates(Update update){
     	updates.add(update);
     }
+    
+    
     /**
      * Will be called after all the set methods are called.
      * There are not that many cases when this will return false.
@@ -40,6 +59,7 @@ public class Rule extends AbstractNode {
     	else return true;
     }
     
+    
 	@Override
 	public int size() {
 		//this iterates through the ArrayList of Update objects, calling size on each.
@@ -47,7 +67,7 @@ public class Rule extends AbstractNode {
 		//number of Update Nodes
 		for (int i = 0; i < updates.size(); i++) {
 			accumulator += updates.get(i).size();
-			mutationNum ++;
+//			mutationNum ++;
 		}
 		//number of Action Nodes
 //		accumulator += actionSwitch.size();
