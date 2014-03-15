@@ -2,7 +2,16 @@ package student;
 
 public class Update extends AbstractNode{
 	
+	Expression memIndex;
+	Expression assigned;
 	
+	public void setMemIndex(Expression expr){
+		memIndex = expr;
+	}
+	
+	public void setAssignment(Expression expr){
+		assigned = expr;
+	}
 	
 	@Override
 	public int size() {
