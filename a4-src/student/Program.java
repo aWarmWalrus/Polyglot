@@ -24,10 +24,14 @@ public class Program extends AbstractNode {
 		return accumulator;
 	}
 
+	
+	//when we call mutate, then we will return a mutated Program
+	//this works because Program extends Node
 	@Override
 	public Node mutate() {
+		
 		// TODO Auto-generated method stub
-		return null;
+		return new Program();
 	}
 
 	@Override
