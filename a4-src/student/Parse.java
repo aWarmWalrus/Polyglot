@@ -15,7 +15,12 @@ public class Parse {
 	public static void main(String[] args){
 		
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader("I:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
+//			BufferedReader reader = new BufferedReader(new FileReader(
+//					"I:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
+			
+			BufferedReader reader = new BufferedReader(new FileReader(
+					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
+			
 			Tokenizer tk = new Tokenizer(reader);
 			Parser godaddy = new ParserImpl();
 			godaddy.parse(reader);
