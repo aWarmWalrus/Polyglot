@@ -7,6 +7,11 @@ public class ActionSwitch {
 		this.action = action;
 	}
 	
+	//only one action per Rule
+	public int size() {
+		return 1;
+	}
+	
 	public void takingAction() {
 		switch (action) {
 			case WAIT:

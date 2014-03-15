@@ -16,7 +16,11 @@ public class Program extends AbstractNode {
 	
 	@Override
 	public int size() {
-		return 0;
+		int accumulator = 0;
+		for (int i = 0; i < rules.size(); i++) {
+			accumulator += rules.get(i).size();
+		}
+		return accumulator;
 	}
 
 	@Override

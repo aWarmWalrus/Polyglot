@@ -9,14 +9,18 @@ import java.util.ArrayList;
  */
 public class Rule extends AbstractNode {
 	
-    private Condition condition;
+    protected Condition condition;
     // how to represent the command?
     private ArrayList<Update> updates;
+<<<<<<< HEAD
     private Action action;
 
     public void setCondition(Condition cond){
     	condition = cond;
     }
+=======
+    private ActionSwitch actionSwitch;
+>>>>>>> 0e40e5851a491322c7032185942ed7da97630798
     
     public void setAction(Action action){
     	this.action = action;
@@ -39,8 +43,15 @@ public class Rule extends AbstractNode {
     
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		//this iterates through the ArrayList of Update objects, calling size on each.
+		int accumulator = 0;
+		//number of Update Nodes
+		for (int i = 0; i < updates.size(); i++) {
+			accumulator += updates.get(i).size();
+		}
+		//number of Action Nodes
+		accumulator += actionSwitch.size();
+		return accumulator;
 	}
 
 	@Override
