@@ -2,6 +2,7 @@ package student;
 
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParserImpl implements Parser {
 
@@ -34,7 +35,7 @@ public class ParserImpl implements Parser {
 			allTokens.add(tokenizer.next());	
 		try {
 			parseProgram(allTokens);
-			for(Rule rule : program.rules) parseRule(rule);
+			//for(Rule rule : program.rules) parseRule(rule);
 		} catch (SyntaxError e) {
 			e.printStackTrace();
 		}
@@ -58,48 +59,51 @@ public class ParserImpl implements Parser {
 			if(i.getType() != Token.SEMICOLON){
 				ruleTokens.add(i);
 			} else {
-				Rule aRule = new Rule(ruleTokens);
-				program.rules.add(aRule);
-				System.out.println(ruleTokens.toString());
-				ruleTokens = new ArrayList<Token>();
+				program.rules.add(parseRule(ruleTokens));
+				System.out.println("From parseProgram(): " + ruleTokens.toString());
+				ruleTokens.clear();
 			}
 		}
 		return program;
 	}
 	
 	/**
-	 * So the idea right now is that all our parsers know what
-	 * they're parsing because we will pass an array
-	 * of tokens to each node. I guess this is a bad idea?
+	 * The game plan: parseRule accepts some tokens from the boss. This class
+	 * will make a call down to parseCondition with a given set of tokens.
+	 * 
 	 * @return
 	 * @throws SyntaxError
 	 */
-	public Rule parseRule(Rule rule) throws SyntaxError {
-		ArrayList<Token> left = new ArrayList<Token>();
-		ArrayList<Token> right = new ArrayList<Token>();
+	public Rule parseRule(ArrayList<Token> tokens) throws SyntaxError {
+		ArrayList<Token> bucket = new ArrayList<Token>();
+		Rule thisRule = new Rule();
 		int arrows = 0;
-		for(Token i : rule.tokens){
+		for(Token i : tokens){
 			if(i.getType() != Token.ARR){
-				if (arrows == 0) left.add(i);
-				if (arrows == 1) right.add(i);
+				bucket.add(i);
 			} else if (i.getType() == Token.ARR){
-				//This is where I parse the the left side of the rule and
-				//determine what goes where and blah blah blah.
-				parseCondition(rule);
-				if(left.contains(Token.LBRACE)){
-					if(!left.contains(Token.RBRACE)) throw new SyntaxError();
-				}
-				if(left.contains(Token.AND) || left.contains(Token.OR)){
-					//rule.condition = new BinaryCondition(null,BinaryConditionOperator.AND,null);
-				}
-				rule.condition = new Relation();
-				System.out.println(left.toString());
 				arrows++;
 				if (arrows == 2) throw new SyntaxError();
+				thisRule.setCondition(parseCondition(bucket));
+				System.out.println("From parseRule(): " + bucket.toString());
+				bucket.clear();
 			}
 		}
+		thisRule.setAction(parseAction(bucket));
 		
-		return rule;
+		//this is the complicated algorithm to parse the updates and figure out
+		//where one update ends and where another begins.
+		int walk = tokens.indexOf(Token.ARR);
+		int mem;
+		ArrayList<Token> bin = new ArrayList<Token>();
+		while(tokens.subList(walk, tokens.size() - 1).contains(Token.ASSIGN)){
+			mem = tokens.indexOf(Token.MEM);
+			
+			
+			thisRule.addUpdates(parseUpdate(bin));
+		}
+		thisRule.checkSemantic();
+		return thisRule;
 	}
 
 	/**
@@ -110,10 +114,34 @@ public class ParserImpl implements Parser {
 	 * @return
 	 * @throws SyntaxError
 	 */
-	public Condition parseCondition(Rule rule) 
+	public Condition parseCondition(ArrayList<Token> tokens) 
 			throws SyntaxError {
+		//case 1: there is no AND and no OR
+		if(!tokens.contains(Token.AND) && 
+				!tokens.contains(Token.OR)){
+			//the entire condition is one relation
+			
+		}
+		return null;
+		//return new Condition();
+	}
+	
+	public Update parseUpdate(List<Token> tokens){
+		return null;
 		
-		return rule.condition;
+	}
+	
+	/**
+	 * Determines if there is an action in the set of tokens passed to it
+	 * 
+	 * @param tokens
+	 * @return NONE if there is no action.
+	 */
+	public Action parseAction(ArrayList<Token> tokens){
+		for(Action action : Action.values()){
+			if(tokens.contains(action)) return action;
+		}
+		return Action.NONE;
 	}
 	
 	//When the Condition is true, then this action may be triggered.
@@ -122,7 +150,7 @@ public class ParserImpl implements Parser {
 		aswitch.takingAction();
 	}
 
-	public Expression parseExpression() throws SyntaxError {
+	public Expression parseExpression(ArrayList<Token> tokens) throws SyntaxError {
 		return parseTerm();
 	}
 

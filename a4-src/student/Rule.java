@@ -9,17 +9,34 @@ import java.util.ArrayList;
  */
 public class Rule extends AbstractNode {
 	
-    protected Condition condition;
+    private Condition condition;
     // how to represent the command?
     private ArrayList<Update> updates;
     private Action action;
-    
-    public ArrayList<Token> tokens;
-    
-    public Rule(ArrayList<Token> tokens) {
-    	this.tokens = tokens;
-    }
 
+    public void setCondition(Condition cond){
+    	condition = cond;
+    }
+    
+    public void setAction(Action action){
+    	this.action = action;
+    }
+    
+    public void addUpdates(Update update){
+    	updates.add(update);
+    }
+    /**
+     * Will be called after all the set methods are called.
+     * There are not that many cases when this will return false.
+     * 		1) When there are no updates and no actions.
+     * 		2) When there is 
+     * @return
+     */
+    public boolean checkSemantic(){
+    	if(action == Action.NONE && updates.isEmpty()) return false;
+    	else return true;
+    }
+    
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub

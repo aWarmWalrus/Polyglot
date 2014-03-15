@@ -3,9 +3,9 @@ package student;
 public class Relation implements Condition{
 	
 	final BinaryCondition condition;
-	Expression left;
-	BinaryOp rel;
-	Expression right;
+	final Expression left;
+	final BinaryOp rel;
+	final Expression right;
 	final boolean isCondition;
 	
 	/**
@@ -14,8 +14,12 @@ public class Relation implements Condition{
 	 * both types.
 	 * 
 	 */
-	public Relation(){
+	public Relation(Expression left, BinaryOp rel, Expression right){
 		isCondition = false;
+		this.left = left;
+		this.rel = rel;
+		this.right = right;
+		condition = null;
 	}
 	
 	/*
@@ -25,6 +29,9 @@ public class Relation implements Condition{
 	public Relation(BinaryCondition cond){
 		isCondition = true;
 		condition = cond;
+		this.left = null;
+		this.rel = null;
+		this.right = null;
 	}
 	
 	@Override
