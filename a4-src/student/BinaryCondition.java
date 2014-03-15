@@ -18,8 +18,7 @@ public class BinaryCondition implements Condition {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override

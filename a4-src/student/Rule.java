@@ -12,7 +12,7 @@ public class Rule extends AbstractNode {
     protected Condition condition;
     // how to represent the command?
     private ArrayList<Update> updates;
-    private Action action;
+    private ActionSwitch actionSwitch;
     
     public ArrayList<Token> tokens;
     
@@ -22,8 +22,15 @@ public class Rule extends AbstractNode {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		//this iterates through the ArrayList of Update objects, calling size on each.
+		int accumulator = 0;
+		//number of Update Nodes
+		for (int i = 0; i < updates.size(); i++) {
+			accumulator += updates.get(i).size();
+		}
+		//number of Action Nodes
+		accumulator += actionSwitch.size();
+		return accumulator;
 	}
 
 	@Override

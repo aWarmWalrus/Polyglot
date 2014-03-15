@@ -1,13 +1,13 @@
 package student;
 
-public class Update implements Node{
+public class Update extends AbstractNode{
 	
 	
 	
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		//end of the tree; update will only assign to a mem[] location
+		return 1; 
 	}
 
 	@Override
