@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A representation of a critter program.
  *
  */
-public class Program implements Node {
+public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
 	

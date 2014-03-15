@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * A representation of a critter rule.
  */
-public class Rule implements Node {
+public class Rule extends AbstractNode {
 	
     protected Condition condition;
     // how to represent the command?
