@@ -1,21 +1,10 @@
 package student;
 
-import java.util.ArrayList;
+public class AbstractNode implements Node{
 
-/**
- * A representation of a critter program.
- *
- */
-public class Program extends AbstractNode {
-
-	ArrayList<Rule> rules;
-	
-	public Program(){
-		rules = new ArrayList<Rule>();
-	}
-	
 	@Override
 	public int size() {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -28,7 +17,7 @@ public class Program extends AbstractNode {
 	@Override
 	public void prettyPrint(StringBuffer sb) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
