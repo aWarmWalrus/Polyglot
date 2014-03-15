@@ -27,9 +27,10 @@ public class Rule extends AbstractNode {
 		//number of Update Nodes
 		for (int i = 0; i < updates.size(); i++) {
 			accumulator += updates.get(i).size();
+			mutationNum ++;
 		}
 		//number of Action Nodes
-		accumulator += actionSwitch.size();
+//		accumulator += actionSwitch.size();
 		return accumulator;
 	}
 
