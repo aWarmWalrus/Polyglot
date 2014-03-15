@@ -83,6 +83,15 @@ public class ParserImpl implements Parser {
 				if (arrows == 0) left.add(i);
 				if (arrows == 1) right.add(i);
 			} else if (i.getType() == Token.ARR){
+				//This is where I parse the the left side of the rule and
+				//determine what goes where and blah blah blah.
+				parseCondition(rule);
+				if(left.contains(Token.LBRACE)){
+					if(!left.contains(Token.RBRACE)) throw new SyntaxError();
+				}
+				if(left.contains(Token.AND) || left.contains(Token.OR)){
+					//rule.condition = new BinaryCondition(null,BinaryConditionOperator.AND,null);
+				}
 				rule.condition = new Relation();
 				System.out.println(left.toString());
 				arrows++;
@@ -93,8 +102,24 @@ public class ParserImpl implements Parser {
 		return rule;
 	}
 
-	public Condition parseCondition() throws SyntaxError {
-		throw new UnsupportedOperationException();
+	/**
+	 * This is called by parseRule. It will take an ArrayList as an argument
+	 * and do the hard work of figuring out what goes where. This is really
+	 * just a helper function.
+	 * 
+	 * @return
+	 * @throws SyntaxError
+	 */
+	public Condition parseCondition(Rule rule) 
+			throws SyntaxError {
+		
+		return rule.condition;
+	}
+	
+	//When the Condition is true, then this action may be triggered.
+	public void triggerAction(Action act){
+		ActionSwitch aswitch = new ActionSwitch(act);
+		aswitch.takingAction();
 	}
 
 	public Expression parseExpression() throws SyntaxError {
