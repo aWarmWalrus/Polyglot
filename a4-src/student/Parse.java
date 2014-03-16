@@ -16,11 +16,11 @@ public class Parse {
 		
 		try {
 			
-//			BufferedReader reader = new BufferedReader(new FileReader(
-//					"/Volumes/KINGSTON/KINGSTON/CS2112/Polyglot1/a4-src/student/example-rules.txt"));
-			
 			BufferedReader reader = new BufferedReader(new FileReader(
-					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
+					"J:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
+			
+//			BufferedReader reader = new BufferedReader(new FileReader(
+//					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
 			
 
 			Tokenizer tk = new Tokenizer(reader);
