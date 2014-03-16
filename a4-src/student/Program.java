@@ -10,6 +10,7 @@ public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
 	
+	
 	public Program(){
 		rules = new ArrayList<Rule>();
 	}
@@ -19,6 +20,7 @@ public class Program extends AbstractNode {
 		int accumulator = 0;
 		for (int i = 0; i < rules.size(); i++) {
 			accumulator += rules.get(i).size();
+//			mutationNum ++;
 		}
 		return accumulator;
 	}
@@ -31,10 +33,14 @@ public class Program extends AbstractNode {
 		return rules;
 	}
 	
+	//when we call mutate, then we will return a mutated Program
+	//this works because Program extends Node
+
 	@Override
 	public Node mutate() {
+		
 		// TODO Auto-generated method stub
-		return null;
+		return new Program();
 	}
 
 	@Override

@@ -8,9 +8,10 @@ public class ActionSwitch {
 	}
 	
 	//only one action per Rule
-	public int size() {
-		return 1;
-	}
+//	public int size() {
+//		
+//		return 1;
+//	}
 	
 	public void takingAction() {
 		switch (action) {
