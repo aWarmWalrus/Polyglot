@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/Volumes/KINGSTON/KINGSTON/CS2112/Polyglot1/.metadata/.plugins/org.eclipse.jdt.core
