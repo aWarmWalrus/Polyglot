@@ -24,14 +24,14 @@ public class Rule extends AbstractNode {
     }
     
     
-    /**
-     * Constructor for a Rule Object
-     * @param cond
-     */
-    public Rule(Condition condition, ArrayList<Update> updateList) {
-    	this.condition = condition; //another way to set the Condition
-    	updates = updateList;
-    }
+//    /**
+//     * Constructor for a Rule Object
+//     * @param cond
+//     */
+//    public Rule(Condition condition, ArrayList<Update> updateList) {
+//    	this.condition = condition; //another way to set the Condition
+//    	updates = updateList;
+//    }
     
     public void setCondition(Condition cond){
     	condition = cond;

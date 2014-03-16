@@ -6,6 +6,8 @@ package student;
  */
 public class BinaryCondition implements Condition {
 	
+//	public boolean isTrue = true;
+	
 	/**
 	 * Create an AST representation of l op r.
 	 * @param l
@@ -16,6 +18,14 @@ public class BinaryCondition implements Condition {
 		//TODO
 	}
 
+	
+//	/**
+//	 * Create a boolean node for conditions must be true (for mutations to occur)
+//	 */
+//	public BinaryCondition(boolean bool){
+//		
+//	}
+	
 	@Override
 	public int size() {
 		return 1;

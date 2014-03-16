@@ -10,6 +10,7 @@ public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
 	
+	
 	public Program(){
 		rules = new ArrayList<Rule>();
 	}
