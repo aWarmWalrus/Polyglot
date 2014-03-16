@@ -6,6 +6,10 @@ package student;
  */
 public class BinaryCondition implements Condition {
 	
+	Condition left;
+	BinaryConditionOperator op;
+	Condition right;
+	
 	/**
 	 * Create an AST representation of l op r.
 	 * @param l
@@ -13,9 +17,27 @@ public class BinaryCondition implements Condition {
 	 * @param r
 	 */
 	public BinaryCondition(Condition l, BinaryConditionOperator op, Condition r) {
-		//TODO
+		left = l;
+		this.op = op;
+		right = r;
 	}
+	
+	public BinaryCondition() {
 
+	}
+	
+	public void setLeft(Condition cond){
+		left = cond;
+	}
+	
+	public void setRight(Condition cond){
+		right = cond;
+	}
+	
+	public void setOp(BinaryConditionOperator op){
+		this.op = op;
+	}
+	
 	@Override
 	public int size() {
 		return 1;

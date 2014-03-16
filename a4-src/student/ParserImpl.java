@@ -11,7 +11,6 @@ public class ParserImpl implements Parser {
 	 */
 	/** The tokenizer from which input is read. */
 	Tokenizer tokenizer;
-	//ArrayList<Token> tokens;
 	Program program;
 	Reader reader;
 
@@ -59,8 +58,9 @@ public class ParserImpl implements Parser {
 			if(i.getType() != Token.SEMICOLON){
 				ruleTokens.add(i);
 			} else {
+				System.out.println();
+				System.out.println("+The Rule: " + ruleTokens.toString());
 				program.rules.add(parseRule(ruleTokens));
-				System.out.println("From parseProgram(): " + ruleTokens.toString());
 				ruleTokens.clear();
 			}
 		}
@@ -75,6 +75,7 @@ public class ParserImpl implements Parser {
 	 * @throws SyntaxError
 	 */
 	public Rule parseRule(ArrayList<Token> tokens) throws SyntaxError {
+//		System.out.println("called parseRule()");
 		ArrayList<Token> bucket = new ArrayList<Token>();
 		Rule thisRule = new Rule();
 		int arrows = 0;
@@ -83,52 +84,224 @@ public class ParserImpl implements Parser {
 				bucket.add(i);
 			} else if (i.getType() == Token.ARR){
 				arrows++;
-				if (arrows == 2) throw new SyntaxError();
+				if (arrows == 2) throw new SyntaxError("");
+				System.out.println("    -The Condition: " + bucket.toString());
 				thisRule.setCondition(parseCondition(bucket));
-				System.out.println("From parseRule(): " + bucket.toString());
 				bucket.clear();
 			}
 		}
+		System.out.println("    -The Command: " + bucket.toString());
 		thisRule.setAction(parseAction(bucket));
-		
-		//this is the complicated algorithm to parse the updates and figure out
-		//where one update ends and where another begins.
-		int walk = tokens.indexOf(Token.ARR);
-		int mem;
-		ArrayList<Token> bin = new ArrayList<Token>();
-		while(tokens.subList(walk, tokens.size() - 1).contains(Token.ASSIGN)){
-			mem = tokens.indexOf(Token.MEM);
-			
-			
-			thisRule.addUpdates(parseUpdate(bin));
-		}
+		thisRule.addUpdates(parseUpdate(bucket));
 		thisRule.checkSemantic();
 		return thisRule;
 	}
 
 	/**
-	 * This is called by parseRule. It will take an ArrayList as an argument
-	 * and do the hard work of figuring out what goes where. This is really
-	 * just a helper function.
+	 * This is called by parseRule. It will take an arraylist of tokens 
+	 * as an argument and do the hard work of figuring out what goes 
+	 * where. This is really just a helper function.
 	 * 
 	 * @return
 	 * @throws SyntaxError
 	 */
 	public Condition parseCondition(ArrayList<Token> tokens) 
 			throws SyntaxError {
-		//case 1: there is no AND and no OR
-		if(!tokens.contains(Token.AND) && 
-				!tokens.contains(Token.OR)){
-			//the entire condition is one relation
+//		System.out.println("called parseCondition()");
+		int status = 0;
+		ArrayList<Token> bucket = new ArrayList<Token>();
+//		Condition left = null;
+//		Condition right = null;
+//		BinaryConditionOperator operator = null;
+		
+		if(!containsToken(tokens, Token.OR) && 
+				!containsToken(tokens, Token.AND)){
+			//there is no AND or OR operators here. Must be a relation.
+			System.out.println("          >Relation: " + tokens.toString());
+			return parseRelation(tokens);
+		}
+		
+		BinaryCondition condition = new BinaryCondition();
+		
+		for(Token i : tokens){
+			
+			//Scan through tokens normally.
+			if (status == 0){
+				if(i.getType() == Token.LBRACE){
+					//this should only happen at beginning or right after an op
+					status = 1;
+					continue;
+				} else if (i.getType() == Token.OR){
+					System.out.println("       >Left: " + bucket.toString());
+					condition.setOp(BinaryConditionOperator.OR);
+					System.out.println("       >Operator: " + BinaryConditionOperator.OR);
+					condition.setLeft(parseCondition(bucket));
+					bucket.clear();
+					continue;
+				} else if (i.getType() == Token.AND){
+					if(containsToken(tokens, Token.OR)) continue;
+					System.out.println("       >Left: " + bucket.toString());
+					condition.setOp(BinaryConditionOperator.AND);
+					System.out.println("       >Operator: " + BinaryConditionOperator.AND);
+					condition.setLeft(parseCondition(bucket));
+					bucket.clear();
+					continue;
+				}
+				//this should never happen if just ended a brace. but whatever. will fix later.
+				bucket.add(i);
+			}
+			
+			//Scan through things in a brace, ignoring ADD and OR, exclude [, ]
+			else if (status == 1){
+				if(i.getType() == Token.RBRACE){
+					status = 0;
+					continue;
+				}
+				bucket.add(i);
+			}
+			
+			//run through to end.
+			else if (status == 2){
+				bucket.add(i);
+			}
+		}
+		
+		if(!bucket.isEmpty()){
+			System.out.println("       >Right: " + bucket.toString());
+			condition.setRight(parseCondition(bucket));
+//			if(left == null || operator == null || right == null){
+//				System.out.println("left and right are null?");
+////				throw new SyntaxError("Something went wrong in parseCondition");
+//			}
+			return condition;
+//		} else if (bucket.isEmpty() && operator == null){
+//			//this is the case when everything is inside the bracket OR when there is
+//			//no AND or OR operator.
+////			if(left == null)
+////				throw new SyntaxError("Something went wrong in parseCondition too");
 			
 		}
-		return null;
-		//return new Condition();
+		
+		return condition;
 	}
 	
-	public Update parseUpdate(List<Token> tokens){
-		return null;
+	/**
+	 * Essentially parses everything after the := token. Determines what is an
+	 * update and passes that as a token array into parseExpression
+	 * 
+	 * @param tokens
+	 * @return
+	 * @throws SyntaxError
+	 */
+	public ArrayList<Update> parseUpdate(List<Token> tokens) throws SyntaxError{
+//		System.out.println("called parseUpdate()");
+		int status = 0;
+		ArrayList<Token> expr = new ArrayList<Token>();
+		ArrayList<Update> updates = new ArrayList<Update>();
+		Update thisUpdate = new Update();
+		for (Token i : tokens) {
+			
+			if (status == 0) {
+				if (i.getType() == Token.MEM)
+					status = 1;
+				continue;
+			} 
+			
+			else if (status == 1) {
+				if (i.getType() != Token.LBRACKET)
+					throw new SyntaxError("");
+				status = 2;
+				continue;
+			} 
+			
+			//ensnare the expression inside the brackets
+			else if (status == 2) {
+				if (i.getType() != Token.RBRACKET)
+					expr.add(i);
+				else{
+					System.out.print("        >The Update: mem" + expr.toString());
+					thisUpdate.setMemIndex(parseExpression(expr));
+					expr.clear();
+					status = 3;
+					continue;
+				}
+			} 
+			
+			//Just checking syntax. If there's no assign, then everything we know is wrong
+			else if (status == 3) {
+				if (i.getType() != Token.ASSIGN)
+					throw new SyntaxError("Missing an := token");
+				status = 4;
+				continue;
+			}
+			
+			//The big one. Checks if the token is an action,
+			//if the token is a mem or sensor token, in which case it expects
+			//something inside a pair of brackets.
+			//if the token is a number, in which case it looks for an op
+			else if (status == 4) {
+				if (i.isAction()){
+					//the current token is an action
+					System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
+					if(expr.isEmpty()) throw new SyntaxError("Missing arguments");
+					thisUpdate.setAssignment(parseExpression(expr));
+				} else if (i.getType() == Token.MEM
+						|| i.isSensor()){
+					expr.add(i);
+					status = 5;
+					continue;
+				} else if (i.isNum()){
+					expr.add(i);
+					status = 7;
+					continue;
+				} else if (i.isAddOp() || i.isMulOp()) //two ops in a row 
+					throw new SyntaxError("You have two operators in a row " +
+							"or an operator directly behind an assign token");
+				else{
+					System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
+					expr.add(i);
+				}
+			}
+			
+			//Jump to the end of the mem or sensor bracket
+			else if (status == 5) {
+				expr.add(i);
+				if(i.getType() == Token.RBRACKET){
+					status = 7;
+					continue;
+				}
+			}
+			
+			//Endgame. If there is no operator, then it is the end of the update.
+			else if (status == 7){
+				if (i.isAddOp() || i.isMulOp()){
+					expr.add(i);
+					status = 4;
+				} else if(i.getType() == Token.MEM){
+					//in the event that there is still another update
+					System.out.println(" := " + expr.toString());
+					thisUpdate.setAssignment(parseExpression(expr));
+					updates.add(thisUpdate);
+					expr.clear();
+					thisUpdate = new Update();
+					status = 1;
+					continue;
+				} else {	//END OF THE UPDATE!!!! :o
+					System.out.println(" := " + expr.toString());
+					thisUpdate.setAssignment(parseExpression(expr));
+					expr.clear();
+				}
+			}			
+		}
 		
+		//The big loop upstairs won't return an assignment if there is no tokens
+		//after the last token of the assignment. This catches that.
+		if(!expr.isEmpty()){
+			System.out.println(" := " + expr.toString());
+			thisUpdate.setAssignment(parseExpression(expr));
+		}
+		
+		return updates;
 	}
 	
 	/**
@@ -136,26 +309,94 @@ public class ParserImpl implements Parser {
 	 * 
 	 * @param tokens
 	 * @return NONE if there is no action.
+	 * @throws SyntaxError 
 	 */
-	public Action parseAction(ArrayList<Token> tokens){
-		for(Action action : Action.values()){
-			if(tokens.contains(action)) return action;
+	public Action parseAction(ArrayList<Token> tokens) throws SyntaxError{
+		
+//		System.out.println("called parseAction");
+		
+		//check every token passed to it
+		for(Token i : tokens){
+			
+			//check if i is an action
+			if(i.isAction()){
+				
+				//check WHICH action it is
+				for(Action action : Action.values()){
+					
+					//the action that matches the token's type
+					if (action.getValue() == i.getType()){
+						System.out.print("        >The Action: " + i);
+						
+						//special case if it is TAG or SERVE action type
+						if (i.getType() == Token.TAG ||
+								i.getType() == Token.SERVE){
+							
+							//create a new arraylist to iterate through
+							ArrayList<Token> findExpr =
+									arraySubList(
+											tokens,
+											tokens.indexOf(i) + 2, //start after the left bracket
+											tokens.size() - 1);	   //end at the last token in tokens
+							
+							int thisToken = tokens.indexOf(i);
+							//assume "[" right after mem token
+							int lbracket = tokens.get(thisToken + 1).getType(); 
+							if(Token.LBRACKET != lbracket) 
+								throw new SyntaxError("");
+							ArrayList<Token> expr = new ArrayList<Token>();
+							for(Token k : findExpr){
+								if(k.getType() == Token.RBRACKET){
+									action.setExpr(parseExpression(expr));
+									break;
+								}
+								else
+									expr.add(k);
+							}
+							
+							System.out.print(expr);
+						}
+						
+						System.out.println();
+						return action;
+					}	
+				}
+				
+				System.out.println("There is a bug here");
+				return Action.NONE;
+			}
 		}
 		return Action.NONE;
 	}
 	
-	//When the Condition is true, then this action may be triggered.
-	public void triggerAction(Action act){
-		ActionSwitch aswitch = new ActionSwitch(act);
-		aswitch.takingAction();
+	public Relation parseRelation(ArrayList<Token> tokens) throws SyntaxError{
+		
+		ArrayList<Token> bucket = new ArrayList<Token>();
+		Relation relation = new Relation();
+		
+		for(Token i : tokens) {
+			if (i.isComp()){ 		//there is a possibility of there being two equality signs here. syntax error here!
+				relation.setLeft(parseExpression(bucket));
+				System.out.println("             ~LeftExpr: " + bucket.toString());
+				System.out.println("             ~RelOpera: " + RelOperator.getRel(i.getType()));
+				relation.setRel(RelOperator.getRel(i.getType()));
+				bucket.clear();
+				continue;
+			}
+			bucket.add(i);
+		}
+		if(bucket.isEmpty()) throw new SyntaxError("Missing a righthand expression!");
+		System.out.println("             ~RightExp: " + bucket.toString());
+		relation.setRight(parseExpression(bucket));
+		return relation;
 	}
-
+	
 	public Expression parseExpression(ArrayList<Token> tokens) throws SyntaxError {
 		return parseTerm();
 	}
 
 	public Expression parseTerm() throws SyntaxError {
-		throw new UnsupportedOperationException();
+		return null;
 	}
 
 	public Expression parseFactor() throws SyntaxError {
@@ -167,12 +408,44 @@ public class ParserImpl implements Parser {
 	}
 
 	// add more as necessary...
+	
+	//When the Condition is true, then this action may be triggered.
+	public void triggerAction(Action act){
+		ActionSwitch aswitch = new ActionSwitch(act);
+		aswitch.takingAction();
+	}
 
 	/**
 	 * Consumes a token of the expected type. Throws a SyntaxError if the wrong
 	 * kind of token is encountered.
 	 */
-	public void consume(int tokenType) throws SyntaxError {
+	public void consume(int curTok, int tokenType) throws SyntaxError {
+		
 		throw new UnsupportedOperationException();
+	}
+	
+	/*
+	 * Helper function to create an array sublist of type ArrayList<Token>
+	 */
+	private ArrayList<Token> arraySubList(ArrayList<Token> tokens, int startInd, int endInd){
+		ArrayList<Token> toReturn = new ArrayList<Token>();
+		for(Token i : tokens){
+			int index = tokens.indexOf(i);
+			if(index >= startInd && index < endInd){
+				toReturn.add(i);
+			}
+		}
+		return toReturn;
+	}
+	
+	/*
+	 * Helper function to see if an arraylist of tokens contains a certain
+	 * token value.
+	 */
+	private boolean containsToken(ArrayList<Token> tokens, int tokenValue){
+		for(Token i : tokens){
+			if (tokenValue == i.getType()) return true;
+		}
+		return false;
 	}
 }

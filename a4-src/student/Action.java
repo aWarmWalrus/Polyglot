@@ -1,6 +1,21 @@
 package student;
 
 public enum Action {
-	WAIT, FORWARD, BACKWARD, LEFT, RIGHT, EAT, ATTACK, 
-	GROW, BUD, MATE, TAG, SERVE, NONE;
+	WAIT(10), FORWARD(11), BACKWARD(12), LEFT(13), RIGHT(14), EAT(15), 
+	ATTACK(16), GROW(17), BUD(18), MATE(19), TAG(20), SERVE(21), NONE(0);
+	
+	private int actionValue;
+	private Expression expr;
+	
+	Action(int value){
+		actionValue = value;		
+	}
+	
+	public int getValue(){
+		return actionValue;
+	}
+	
+	public void setExpr(Expression expression){
+		expr = expression;
+	}
 }

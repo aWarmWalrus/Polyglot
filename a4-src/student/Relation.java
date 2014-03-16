@@ -2,36 +2,37 @@ package student;
 
 public class Relation implements Condition{
 	
-	final BinaryCondition condition;
-	final Expression left;
-	final BinaryOp rel;
-	final Expression right;
-	final boolean isCondition;
+	public Expression left;
+	public RelOperator rel;
+	public Expression right;
+
 	
 	/**
-	 * A Relation can either be a comparison of two expr across a rel operator
-	 * or it can be a Condition enclosed in brackets. This class keeps track of
-	 * both types.
+	 * A Relation is only ever going to be a comparison of two expr across a 
+	 * rel operator or it can be a Condition enclosed in brackets. This class 
+	 * keeps track of both types.
 	 * 
 	 */
-	public Relation(Expression left, BinaryOp rel, Expression right){
-		isCondition = false;
+	public Relation(Expression left, RelOperator rel, Expression right){
 		this.left = left;
 		this.rel = rel;
 		this.right = right;
-		condition = null;
 	}
 	
-	/*
-	 * This Constructor should ONLY be called if the condition has an AND
-	 * or an OR operator within brackets. 
-	 */
-	public Relation(BinaryCondition cond){
-		isCondition = true;
-		condition = cond;
-		this.left = null;
-		this.rel = null;
-		this.right = null;
+	public Relation(){
+		
+	}
+	
+	public void setLeft(Expression l){
+		left = l;
+	}
+	
+	public void setRight(Expression r){
+		right = r;
+	}
+	
+	public void setRel(RelOperator rel){
+		this.rel = rel;
 	}
 	
 	@Override

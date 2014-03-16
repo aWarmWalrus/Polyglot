@@ -15,18 +15,18 @@ public class Rule extends AbstractNode {
 
     private Action action;
 
+    private ActionSwitch actionSwitch;
+    
     public void setCondition(Condition cond){
     	condition = cond;
     }
-
-    private ActionSwitch actionSwitch;
 
     public void setAction(Action action){
     	this.action = action;
     }
     
-    public void addUpdates(Update update){
-    	updates.add(update);
+    public void addUpdates(ArrayList<Update> updates){
+    	this.updates = updates;
     }
     /**
      * Will be called after all the set methods are called.
@@ -36,7 +36,8 @@ public class Rule extends AbstractNode {
      * @return
      */
     public boolean checkSemantic(){
-    	if(action == Action.NONE && updates.isEmpty()) return false;
+    	if(action == Action.NONE && 
+    			(updates == null || updates.isEmpty())) return false;
     	else return true;
     }
     

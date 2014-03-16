@@ -22,7 +22,15 @@ public class Program extends AbstractNode {
 		}
 		return accumulator;
 	}
-
+	
+	/**
+	 * Returns the list of rules that are in this program
+	 * @return
+	 */
+	public ArrayList<Rule> getRules(){
+		return rules;
+	}
+	
 	@Override
 	public Node mutate() {
 		// TODO Auto-generated method stub
