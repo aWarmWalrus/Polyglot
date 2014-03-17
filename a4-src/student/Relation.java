@@ -5,22 +5,14 @@ public class Relation implements Condition{
 	public Expression left;
 	public RelOperator rel;
 	public Expression right;
-
-	
-	/**
-	 * A Relation is only ever going to be a comparison of two expr across a 
-	 * rel operator or it can be a Condition enclosed in brackets. This class 
-	 * keeps track of both types.
-	 * 
-	 */
-	public Relation(Expression left, RelOperator rel, Expression right){
-		this.left = left;
-		this.rel = rel;
-		this.right = right;
-	}
+	public Condition condition;
 	
 	public Relation(){
 		
+	}
+	
+	public void setCondition(Condition cond){
+		condition = cond;
 	}
 	
 	public void setLeft(Expression l){

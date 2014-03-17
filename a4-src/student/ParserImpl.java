@@ -110,9 +110,6 @@ public class ParserImpl implements Parser {
 //		System.out.println("called parseCondition()");
 		int status = 0;
 		ArrayList<Token> bucket = new ArrayList<Token>();
-//		Condition left = null;
-//		Condition right = null;
-//		BinaryConditionOperator operator = null;
 		
 		if(!containsToken(tokens, Token.OR) && 
 				!containsToken(tokens, Token.AND)){
@@ -129,7 +126,8 @@ public class ParserImpl implements Parser {
 			if (status == 0){
 				if(i.getType() == Token.LBRACE){
 					//this should only happen at beginning or right after an op
-					status = 1;
+					status = -1;
+					if(containsToken(tokens, Token.OR)) bucket.add(i);
 					continue;
 				} else if (i.getType() == Token.OR){
 					System.out.println("       >Left: " + bucket.toString());
@@ -139,7 +137,10 @@ public class ParserImpl implements Parser {
 					bucket.clear();
 					continue;
 				} else if (i.getType() == Token.AND){
-					if(containsToken(tokens, Token.OR)) continue;
+					if(containsToken(tokens, Token.OR)) {
+						bucket.add(i);
+						continue;
+					}
 					System.out.println("       >Left: " + bucket.toString());
 					condition.setOp(BinaryConditionOperator.AND);
 					System.out.println("       >Operator: " + BinaryConditionOperator.AND);
@@ -152,9 +153,13 @@ public class ParserImpl implements Parser {
 			}
 			
 			//Scan through things in a brace, ignoring ADD and OR, exclude [, ]
-			else if (status == 1){
-				if(i.getType() == Token.RBRACE){
-					status = 0;
+			else if (status < 0){
+				if(i.getType() == Token.LBRACE){
+					status--;
+				}
+				else if(i.getType() == Token.RBRACE){
+					status++;
+					if(containsToken(tokens, Token.OR)) bucket.add(i);
 					continue;
 				}
 				bucket.add(i);
@@ -169,19 +174,11 @@ public class ParserImpl implements Parser {
 		if(!bucket.isEmpty()){
 			System.out.println("       >Right: " + bucket.toString());
 			condition.setRight(parseCondition(bucket));
-//			if(left == null || operator == null || right == null){
-//				System.out.println("left and right are null?");
-////				throw new SyntaxError("Something went wrong in parseCondition");
-//			}
+
 			return condition;
-//		} else if (bucket.isEmpty() && operator == null){
-//			//this is the case when everything is inside the bracket OR when there is
-//			//no AND or OR operator.
-////			if(left == null)
-////				throw new SyntaxError("Something went wrong in parseCondition too");
 			
 		}
-		
+		System.out.println("THIS NEVER REALLY HAPPENS DOES IT?");
 		return condition;
 	}
 	
@@ -374,16 +371,36 @@ public class ParserImpl implements Parser {
 		ArrayList<Token> bucket = new ArrayList<Token>();
 		Relation relation = new Relation();
 		
+		int status = 0;
+		
 		for(Token i : tokens) {
-			if (i.isComp()){ 		//there is a possibility of there being two equality signs here. syntax error here!
-				relation.setLeft(parseExpression(bucket));
-				System.out.println("             ~LeftExpr: " + bucket.toString());
-				System.out.println("             ~RelOpera: " + RelOperator.getRel(i.getType()));
-				relation.setRel(RelOperator.getRel(i.getType()));
-				bucket.clear();
-				continue;
+			
+			if (status == 0){
+				if (i.getType() == Token.LBRACE){
+					//this is to cover the case when the entire condition is inside braces
+					//assumes that the last token is a right brace.
+					status = 1;
+					continue;
+				}
+				if (i.isComp()){ 		//there is a possibility of there being two equality signs here. syntax error here!
+					relation.setLeft(parseExpression(bucket));
+					System.out.println("             ~LeftExpr: " + bucket.toString());
+					System.out.println("             ~RelOpera: " + RelOperator.getRel(i.getType()));
+					relation.setRel(RelOperator.getRel(i.getType()));
+					bucket.clear();
+					continue;
+				}
+				bucket.add(i);
 			}
-			bucket.add(i);
+			
+			else if(status == 1){
+				if(i.getType() == Token.RBRACE){
+					System.out.println("  :o         ~A Nested Condition!: " + bucket.toString());
+					relation.setCondition(parseCondition(bucket));
+					return relation;
+				}
+				bucket.add(i);
+			}
 		}
 		if(bucket.isEmpty()) throw new SyntaxError("Missing a righthand expression!");
 		System.out.println("             ~RightExp: " + bucket.toString());
@@ -392,6 +409,54 @@ public class ParserImpl implements Parser {
 	}
 	
 	public Expression parseExpression(ArrayList<Token> tokens) throws SyntaxError {
+		
+		int status = 0;
+		ArrayList<Token> bucket = new ArrayList<Token>();
+		BinaryExpression expression = new BinaryExpression();
+		
+		
+		
+		for(Token i : tokens){
+			
+			if(status == 0){
+				if (i.getType() == Token.LPAREN){
+					if(bucket.isEmpty()){
+						status = 2;
+						continue;
+					}
+				}
+				
+			}
+			
+			else if(status == 1){
+				//just received some token. looking for an op.
+				
+			}
+			
+			if(status == 2){
+				//skipping across a parenthetical statement
+				//this assumes that the parentheses are on the left of the 
+				//operator. 
+				if(i.getType() == Token.RPAREN){
+					expression.setLeft(parseExpression(bucket));
+					status = 0;
+					continue;
+				}
+				bucket.add(i);
+			}
+			
+			else if(status == 3){
+				
+			}
+			
+			else if(status == 4){
+				//this assumes that the left and the operator have been found
+				//now we're just putting everything into another binary expr
+				bucket.add(i);
+			}
+		}
+		
+		
 		return parseTerm();
 	}
 
@@ -443,8 +508,27 @@ public class ParserImpl implements Parser {
 	 * token value.
 	 */
 	private boolean containsToken(ArrayList<Token> tokens, int tokenValue){
+		int status = 0;
 		for(Token i : tokens){
-			if (tokenValue == i.getType()) return true;
+			if (status == 0){
+				if (tokenValue == i.getType()) return true;
+				if (i.getType() == Token.LBRACE ||
+						i.getType() == Token.LPAREN){
+					status++;
+					continue;
+				}
+			}
+			
+			//things in the brackets/parenthases are invisible
+			else if (status > 0){
+				if (i.getType() == Token.LBRACE||
+						i.getType() == Token.LPAREN)
+					status++;
+				if (i.getType() == Token.RBRACE||
+						i.getType() == Token.RPAREN) 
+					status--;
+				continue;
+			}
 		}
 		return false;
 	}

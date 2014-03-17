@@ -23,7 +23,6 @@ public class Parse {
 //					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
 			
 
-			Tokenizer tk = new Tokenizer(reader);
 			Parser godaddy = new ParserImpl();
 			godaddy.parse(reader);
 //			while(tk.hasNext()){

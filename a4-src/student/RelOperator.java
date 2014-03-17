@@ -34,8 +34,8 @@ public enum RelOperator {
 		if(token == 32) return RelOperator.LT;
 		else if(token == 33) return RelOperator.LE;
 		else if(token == 34) return RelOperator.EQ;
-		else if(token == 35) return RelOperator.GT;
-		else if(token == 36) return RelOperator.GE;
+		else if(token == 35) return RelOperator.GE;
+		else if(token == 36) return RelOperator.GT;
 		else if(token == 37) return RelOperator.NE;
 		return null;
 	}
