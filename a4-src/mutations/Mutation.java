@@ -1,6 +1,8 @@
-package student;
+package mutations;
 
 import java.util.Random;
+
+import student.Program;
 
 /**
  * Handles mutations for Fault Injection.
@@ -12,6 +14,7 @@ public class Mutation {
 
 	// random number generator
 	private Random rand;
+	private Critter critter;
 	private Program originalProgram; // should I make this final?
 	private Program mutatedProgram;
 	public int chosenNodeID;
@@ -20,15 +23,16 @@ public class Mutation {
 	 * Constructor - will produce a new Mutation object.
 	 * 
 	 * @param a
-	 *            Program object.
+	 *            Critter object.
 	 */
-	public Mutation(Program program) {
-		originalProgram = program;
-		mutatedProgram = originalProgram; 
-		//it starts off as an exact copy
-		
-		//TODO
-		//how to make it so that it's not an alias?
+	public Mutation(Critter crit) {
+		critter = crit;
+		originalProgram = critter.program;
+		mutatedProgram = originalProgram;
+		// it starts off as an exact copy
+
+		// TODO
+		// how to make it so that it's not an alias?
 	}
 
 	/**
@@ -61,7 +65,6 @@ public class Mutation {
 		}
 
 	}
-	
 
 	/**
 	 * Changes an attribute of the critter
@@ -76,53 +79,48 @@ public class Mutation {
 		// This mutation will either increase/decrease (with equal probability)
 		// the values of these entries
 
-		// ideas: use a HashMap to keep track of the values of the memory
-		// can add and remove keys like we add and remove memory
-		// but where do we put this memory? We have no Critter Class
-		
-		if (rand.nextInt(2) == 0){ //this will decrease attributes
+		if (rand.nextInt(2) == 0) { // this will decrease attributes
 			int i = rand.nextInt(3);
-			if (i == 0){
-				//if (Mem.size > 8) { //needs to be at least 8
-				
-				//Mem.remove(mem.size()-1) 
-				//this will remove the last element that was put into the memory
-				
+			if (i == 0) {
+				if (critter.mem.size() > 8) { // needs to be at least 8
+
+					critter.mem.remove(critter.mem.size() - 1);
+					// remove the last element that was put into the memory
+				}
+			} else if (i == 1) { // decreasing defense
+				if (critter.mem.get(1) > 1) { // needs to be greater than 1
+					critter.mem.add(1, critter.mem.get(1) - 1);
+					// we take off 1 from previous def value
+
+				}
+			} else if (i == 2) { // decreasing offense
+				if (critter.mem.get(2) > 1) { // needs to be greater than 1
+					critter.mem.add(2, critter.mem.get(2) - 1);
+					// we take off 1 from old offense value
+				}
 			}
-			else if (i == 1) { //decreasing defense
-				//if (Mem.get(1) > 1) { //needs to be greater than 1
-				//Mem.put(1, Mem.get(1) - 1); //we take off 1 from previous def value
-			}
-			else if (i == 2) { //decreasing offense
-				//if (Mem.get(2) > 1) { //needs to be greater than 1
-				//Mem.put(2, Mem.get(2) - 1); //we take off 1 from old offense value
-			}
+
+		} else { // nextInt was 1 this will increase attributes
 			
-		} else { //nextInt was 1 this will increase attributes
-			//Mem.put(int index, V value) 
-			//index = size() + 1 because we are adding a new memory location
-			//that is the type of the memory value?
-			int i = rand.nextInt(3);
-			if (i == 0) { //increasing memory
-				//Mem.put(size(), V value);
-				
+			// index = size() + 1 because we are adding a new memory spot
+			
+			int p = rand.nextInt(3);
+			if (p == 0) { // increasing memory
+				critter.mem.add(critter.mem.size(), 0);
+
+			} else if (p == 1) { // increasing defense
+				critter.mem.add(1, critter.mem.get(1) + 1);
+			} else if (p == 2) { // increasing offense
+				critter.mem.add(2, critter.mem.get(2) + 1);
 			}
-			else if (i == 1) { //increasing defense
-				//Mem.put(1, Mem.get(1) + 1);
-			}
-			else if (i == 2) { //increasing offense
-				//Mem.put(2, Mem.get(2) + 1);
-			}
+
 		}
-		
-		
 		// after the mutation there is another 1/4 chance that another
 		// mutation will happen
 		return makeMutation();
+
 	}
 
-	
-	
 	/**
 	 * Changes the rule set of the Program given in the constructor.
 	 * 
@@ -130,30 +128,28 @@ public class Mutation {
 	 */
 	private Program ruleMutation() {
 		mutatedProgram = originalProgram;
-		
-		//total number of notes to choose from:
-		int programSize = mutatedProgram.size(); 
-		
-		//we choose a random number that represents one Node
+
+		// total number of notes to choose from:
+		int programSize = mutatedProgram.size();
+
+		// we choose a random number that represents one Node
 		chosenNodeID = rand.nextInt(programSize);
-		
+
 		originalProgram.mutate();
-		
+
 		// after the mutation there is another 1/4 chance that another
 		// mutation will happen
 		return makeMutation();
 	}
 
-	
 	/**
 	 * Does not mutate the Program
 	 * 
 	 * @return a copy of the same Program that was given in the constructor
 	 */
 	private Program noMutation() {
-		
 		return mutatedProgram;
-		
+
 	}
-	
+
 }
