@@ -2,6 +2,9 @@ package student;
 
 import java.util.ArrayList;
 
+import mutations.Critter;
+import mutations.Mutation;
+
 /**
  * A representation of a critter program.
  *
@@ -9,7 +12,10 @@ import java.util.ArrayList;
 public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
-	
+	public Critter critter;
+	// assuming that you call the Critter constructor first,
+	// and then the Critter constructor assigns program.critter
+	// you should not mutate if you only initialize a Program
 	
 	public Program(){
 		rules = new ArrayList<Rule>();
@@ -38,9 +44,13 @@ public class Program extends AbstractNode {
 
 	@Override
 	public Node mutate() {
+		if (critter == null) {
+			critter = new Critter(this); 
+			//making a new Critter 
+		}
+		Mutation mutt = new Mutation(critter, this);
+		return mutt.makeMutation();
 		
-		// TODO Auto-generated method stub
-		return new Program();
 	}
 
 	@Override
