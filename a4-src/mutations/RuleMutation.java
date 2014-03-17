@@ -28,6 +28,7 @@ public class RuleMutation extends Mutation {
 		int mutationType = rand.nextInt(5);
 		if (mutationType == 0) {
 			((AbstractNode)nodeToMutate).remove();
+			//justify this design decision
 		}
 		if (mutationType == 1) {
 			((AbstractNode)nodeToMutate).swapOrder();

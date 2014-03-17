@@ -52,6 +52,44 @@ public class Program extends AbstractNode {
 		return mutt.makeMutation();
 		
 	}
+	
+	@Override
+	public Node remove() {
+		return invalidMutationHandler(); // not supported for type Program
+	} 
+	
+	@Override
+	public Node swapOrder() {
+		//TODO swap two rules (randomly chosen)
+		return null;
+	}
+	
+	@Override
+	public Node cloneSubtree() {
+		return invalidMutationHandler(); 
+		// can't replace a Program with another Program; 
+		// there is only one Program
+	}
+	
+	@Override
+	public Node randomReplace() {
+		return invalidMutationHandler(); //can't replace a Program
+	}
+	
+	@Override
+	public Node newParent() {
+		return invalidMutationHandler(); //Program doesn't have a parent
+	}
+	
+	@Override
+	public Node cloneKid() {
+		//TODO clone a randomly chosen Rule
+		return null;
+	}
+	private Node invalidMutationHandler() {
+		//TODO
+		return null;
+	}
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {
