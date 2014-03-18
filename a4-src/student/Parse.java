@@ -15,7 +15,6 @@ public class Parse {
 	public static void main(String[] args){
 		
 		try {
-			
 			Num e = new Num(3);
 			
 			BufferedReader reader = new BufferedReader(new FileReader(
