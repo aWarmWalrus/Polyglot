@@ -1,7 +1,6 @@
 package student;
 
 import java.util.ArrayList;
-
 import java.util.ArrayList;
 
 /**
@@ -73,11 +72,67 @@ public class Rule extends AbstractNode {
 		return accumulator;
 	}
 
+//	@Override
+//	public Node mutate() {
+//		Auto-generated method stub
+//		return null;
+//	}
+	
 	@Override
-	public Node mutate() {
-		// TODO Auto-generated method stub
-		return null;
+	public Node remove() {
+		Program p = (Program)stackOfNodes.getLast(); //should be a Program
+		p.rules.remove(this); //removes this Rule from the Program
+		return p;
+	} 
+	
+	@Override
+	public Node swapOrder() {
+		return invalidMutationHandler(); 
+		// you can't swap a condition with a command
 	}
+	
+	@Override
+	public Node cloneSubtree() {
+		return null ;
+		// TODO
+	}
+	
+	@Override
+	public Node randomReplace() {
+		return invalidMutationHandler(); 
+		// cannot replace a Rule independently of its children
+	}
+	
+	@Override
+	public Node newParent() {
+		return invalidMutationHandler(); 
+		// cannot insert a Program as the parent of this rule
+	}
+	
+	@Override
+	public Node cloneKid() {
+		return invalidMutationHandler(); 
+		// Rule does not have a variable amount of Children
+	}
+	
+	/**
+	 * if the called mutation is not valid for that type of Node
+	 * then this is called
+	 * @return a mutated Node
+	 */
+	private Node invalidMutationHandler() {
+		int randMutation = rand.nextInt(2);
+		if (randMutation == 0) {
+			return remove();
+		} else {
+			return cloneSubtree();
+		}
+	}
+	
+	
+	
+	
+	
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {

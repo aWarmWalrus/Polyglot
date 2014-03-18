@@ -46,6 +46,7 @@ public class RuleMutation extends Mutation {
 			((AbstractNode)nodeToMutate).cloneKid();
 		}
 
+		//TODO //DELETE THIS?
 		nodeToMutate.mutate();
 
 		// after the mutation there is another 1/4 chance that another
