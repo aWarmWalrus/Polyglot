@@ -18,4 +18,17 @@ public enum Action {
 	public void setExpr(Expression expression){
 		expr = expression;
 	}
+	
+	public void prettyPrint(StringBuffer sb){
+		if(actionValue != 0){
+			Token temp = new Token(actionValue, 0);
+			sb.append(temp.toString());
+			if(expr != null) {
+				sb.append("[");
+				expr.prettyPrint(sb);
+				sb.append("]");
+			}
+		}
+		sb.append(";");
+	}
 }

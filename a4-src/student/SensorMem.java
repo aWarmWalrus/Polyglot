@@ -29,4 +29,13 @@ public class SensorMem extends Expression{
 	void setExpression(Expression expr){
 		index = expr;
 	}
+	
+	public void prettyPrint(StringBuffer sb){
+		System.out.println(sb.toString());
+		Token tool = new Token(o.value, 0);
+		sb.append(tool.toString());
+		sb.append("[");
+		index.prettyPrint(sb);
+		sb.append("]");
+	}
 }

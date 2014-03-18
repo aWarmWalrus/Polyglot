@@ -118,8 +118,10 @@ public class BinaryCondition extends AbstractNode implements Condition {
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {
-		// TODO Auto-generated method stub
-
+		left.prettyPrint(sb);
+		if(op.opvalue == 30) sb.append(" or ");
+		else sb.append(" and ");
+		right.prettyPrint(sb);
 	}
 
 	@Override

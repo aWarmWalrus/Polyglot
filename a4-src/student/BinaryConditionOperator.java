@@ -9,9 +9,15 @@ import java.util.List;
  */
 public enum BinaryConditionOperator {
 
-	OR,
-	AND;
+	OR (30),
+	AND (31);
 
+	public int opvalue;
+	
+	BinaryConditionOperator(int value){
+		opvalue = value;
+	}
+	
 	/**
 	 * The list of operators.
 	 */

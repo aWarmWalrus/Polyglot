@@ -11,7 +11,7 @@ import java.util.List;
  */
 public enum RelOperator {
 
-	LT(32), LE(33), EQ(34), GT(35), GE(36), NE(37);
+	LT(32), LE(33), EQ(34), GE(35), GT(36), NE(37);
 	
 	
 	RelOperator(int value){
@@ -19,6 +19,10 @@ public enum RelOperator {
 	}
 	
 	private int relValue;
+	
+	public int getValue(){
+		return relValue;
+	}
 	
 	/**
 	 * The list of operators.

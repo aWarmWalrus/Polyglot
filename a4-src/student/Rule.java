@@ -129,15 +129,15 @@ public class Rule extends AbstractNode {
 		}
 	}
 	
-	
-	
-	
-	
-
 	@Override
 	public void prettyPrint(StringBuffer sb) {
-		// TODO Auto-generated method stub
-
+		sb.append("\n");
+		condition.prettyPrint(sb);
+		sb.append(" --> ");
+		if(updates != null)
+			for (Update i : updates) 
+				i.prettyPrint(sb);
+		action.prettyPrint(sb);
 	}
 
 }

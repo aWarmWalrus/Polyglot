@@ -6,25 +6,37 @@ public class Relation extends AbstractNode implements Condition{
 	public RelOperator rel;
 	public Expression right;
 	public Condition condition;
+	public boolean isCondition = false;
 	
-	public Relation(){
+
+	public void setCondition(Condition cond) throws SyntaxError {
 		
+		if(!isCondition){
+			condition = cond;
+			isCondition = true;
+		}
+		else throw new SyntaxError("something weird happened with Relations brooo");
 	}
 	
-	public void setCondition(Condition cond) {
-		condition = cond;
+	public void setLeft(Expression l) throws SyntaxError {
+		if(!isCondition){
+			left = l;
+		}
+		else throw new SyntaxError("something weird happened with Relations brooo");
 	}
 	
-	public void setLeft(Expression l) {
-		left = l;
+	public void setRight(Expression r) throws SyntaxError {
+		if(!isCondition){
+			right = r;
+		}
+		else throw new SyntaxError("something weird happened with Relations brooo");
 	}
 	
-	public void setRight(Expression r) {
-		right = r;
-	}
-	
-	public void setRel(RelOperator rel) {
-		this.rel = rel;
+	public void setRel(RelOperator rel) throws SyntaxError {
+		if(!isCondition){
+			this.rel = rel;
+		}
+		else throw new SyntaxError("something weird happened with Relations brooo");
 	}
 	
 	@Override
@@ -97,8 +109,18 @@ public class Relation extends AbstractNode implements Condition{
 	
 	@Override
 	public void prettyPrint(StringBuffer sb) {
-		// TODO Auto-generated method stub
 		
+		if(isCondition){
+			sb.append("{");
+			condition.prettyPrint(sb);
+			sb.append("}");
+		}
+		else{
+			left.prettyPrint(sb);
+			Token temp = new Token(rel.getValue(), 0);
+			sb.append(temp.toString());
+			right.prettyPrint(sb);
+		}
 	}
 
 	@Override

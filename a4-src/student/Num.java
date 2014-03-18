@@ -8,4 +8,8 @@ public class Num extends Expression {		//WHY IS THIS ABSTRACT?
     public Num(int v) {
         value = v;
     }
+    
+    public void prettyPrint(StringBuffer sb){
+    	sb.append(Integer.toString(value));
+    }
 }

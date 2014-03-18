@@ -437,10 +437,6 @@ public class ParserImpl implements Parser {
 			return new Num(num.value);
 		}
 		
-		//just catch cases when it's a lone sensormem. this too will happen a lot.
-		
-		
-		
 		for(Token i : tokens){
 			
 			//
@@ -459,6 +455,8 @@ public class ParserImpl implements Parser {
 				//else goes into the right bucket.
 				else if (i.isAddOp()){
 					System.out.println("                 @Left: " + bucket.toString());
+					System.out.println("                 @Op  : " + i.toString());
+					expression.setOp(i.getType());
 					expression.setLeft(parseExpression(bucket));
 					status = 4;
 					bucket.clear();
@@ -473,6 +471,8 @@ public class ParserImpl implements Parser {
 						continue;
 					}
 					System.out.println("                 @Left: " + bucket.toString());
+					System.out.println("                 @Op  : " + i.toString());
+					expression.setOp(i.getType());
 					expression.setLeft(parseExpression(bucket));
 					status = 4;
 					bucket.clear();
@@ -517,8 +517,8 @@ public class ParserImpl implements Parser {
 				if (!i.isMulOp() && !i.isAddOp()){
 					throw new SyntaxError("yo expected a operator here bro");
 				}
-				System.out.println("                 @Op: " + BinaryOp.getBinaryOp(i.getType()));
-				expression.setOp(BinaryOp.getBinaryOp(i.getType()));
+				System.out.println("                 @Op: " + i.toString());
+				expression.setOp(i.getType());
 				status = 4;
 				continue;
 			}
@@ -563,10 +563,11 @@ public class ParserImpl implements Parser {
 			return thisSM;
 		
 		else{
-			if(!wasteofmemory.isEmpty())
+			if(!wasteofmemory.isEmpty()){
 				System.out.println("                 @Left: " + wasteofmemory.toString());
+				expression.setLeft(parseExpression(wasteofmemory));
+			}
 			System.out.println("                 @Right: " + bucket.toString());
-			expression.setLeft(parseExpression(wasteofmemory));
 			expression.setRight(parseExpression(bucket));
 			return expression;
 		}

@@ -22,11 +22,14 @@ public class Parse {
 			
 //			BufferedReader reader = new BufferedReader(new FileReader(
 //					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
-			
-
+			Token x = new Token(35, 2);
+			System.out.println(x.toString());
 			Parser godaddy = new ParserImpl();
-			godaddy.parse(reader);
+			Program whatt = godaddy.parse(reader);
 			System.out.println("done!");
+			StringBuffer sb = new StringBuffer();
+			whatt.prettyPrint(sb);
+			System.out.println(sb.toString());
 //			while(tk.hasNext()){
 //				System.out.print(tk.next() + " ");
 //			}

@@ -124,8 +124,7 @@ public class Program extends AbstractNode {
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {
-		// TODO Auto-generated method stub
-
+		for(Rule i : rules) i.prettyPrint(sb);
 	}
 
 }
