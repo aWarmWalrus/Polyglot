@@ -289,6 +289,8 @@ public class ParserImpl implements Parser {
 				} else {	//END OF THE UPDATE!!!! :o
 					System.out.println("         >Update Right : " + expr.toString());
 					thisUpdate.setAssignment(parseExpression(expr));
+					updates.add(thisUpdate);
+					thisUpdate = new Update();
 					expr.clear();
 				}
 			}			
@@ -299,6 +301,7 @@ public class ParserImpl implements Parser {
 		if(!expr.isEmpty()){
 			System.out.println("         >Update Right: " + expr.toString());
 			thisUpdate.setAssignment(parseExpression(expr));
+			updates.add(thisUpdate);
 		}
 		
 		return updates;
@@ -337,7 +340,7 @@ public class ParserImpl implements Parser {
 									arraySubList(
 											tokens,
 											tokens.indexOf(i) + 2, //start after the left bracket
-											tokens.size() - 1);	   //end at the last token in tokens
+											tokens.size());	   //end at the last token in tokens
 							
 							int thisToken = tokens.indexOf(i);
 							//assume "[" right after mem token
@@ -420,6 +423,8 @@ public class ParserImpl implements Parser {
 	
 	public Expression parseExpression(ArrayList<Token> tokens) throws SyntaxError {
 		
+		if(tokens.isEmpty()) throw new SyntaxError("Got an empty set of tokens");
+		
 		int status = 0;
 		boolean reallybadstyle = false;
 		ArrayList<Token> bucket = new ArrayList<Token>();
@@ -436,6 +441,9 @@ public class ParserImpl implements Parser {
 			System.out.println("                 @Num: " + num.value);
 			return new Num(num.value);
 		}
+		
+		//need to catch cases when everything is inside parenthases.
+		
 		
 		for(Token i : tokens){
 			
@@ -506,6 +514,7 @@ public class ParserImpl implements Parser {
 					if(reallybadstyle)
 						bucket.add(i);
 					expression.setLeft(parseExpression(bucket));
+					wasteofmemory = (ArrayList<Token>) bucket.clone();
 					bucket.clear();
 					status = 3;
 					continue;
@@ -559,8 +568,12 @@ public class ParserImpl implements Parser {
 			}
 		}
 		
-		if(bucket.isEmpty())
-			return thisSM;
+		if(bucket.isEmpty()){
+			if(thisSM.index != null) return thisSM;
+			System.out.println(bucket.toString());
+			System.out.println(wasteofmemory.toString());
+			return parseExpression(wasteofmemory);
+		}
 		
 		else{
 			if(!wasteofmemory.isEmpty()){
