@@ -2,7 +2,7 @@ package student;
 
 /** A literal numeric constant, such as 2.
  */
-public abstract class Num extends Expression {
+public class Num extends Expression {		//WHY IS THIS ABSTRACT?
     public final int value;
 
     public Num(int v) {

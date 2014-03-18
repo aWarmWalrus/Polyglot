@@ -16,6 +16,8 @@ public class Parse {
 		
 		try {
 			
+			Num e = new Num(3);
+			
 			BufferedReader reader = new BufferedReader(new FileReader(
 					"J:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
 			
@@ -25,6 +27,7 @@ public class Parse {
 
 			Parser godaddy = new ParserImpl();
 			godaddy.parse(reader);
+			System.out.println("done!");
 //			while(tk.hasNext()){
 //				System.out.print(tk.next() + " ");
 //			}

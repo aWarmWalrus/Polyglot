@@ -1,7 +1,22 @@
 package student;
 
 // Represents +, -, *, /, mod
-public abstract class BinaryOp extends Expression { // need not be abstract
-    private Expression left, right;
-    // how to keep track of which operator it is?
+public enum BinaryOp{
+	
+	PLUS(50), MINUS(51), MUL(60), DIV(61), MOD(62);
+	
+	int value;
+	
+	BinaryOp(int newvalue){
+		value = newvalue;
+	}
+	
+	static BinaryOp getBinaryOp(int token){
+		
+		for(BinaryOp i : BinaryOp.values()){
+			if (i.value == token) return i;
+		}
+		
+		return null;
+	}
 }

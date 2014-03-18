@@ -1,5 +1,7 @@
 package student;
 
-public class Factor {
+public interface Factor extends Node{
 
+	
+	
 }
