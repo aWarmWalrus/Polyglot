@@ -1,10 +1,11 @@
 package mutations;
 
 import student.Node;
+import student.Program;
 
 public class AttributeMutation extends Mutation {
 
-	public AttributeMutation(Critter crit, Node node) {
+	public AttributeMutation(Critter crit, Program node) {
 		super(crit, node);
 		// TODO Auto-generated constructor stub
 	}

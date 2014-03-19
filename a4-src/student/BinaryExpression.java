@@ -31,9 +31,20 @@ public class BinaryExpression extends Expression implements Node {
 	Expression left;
 	BinaryOp op;
 	Expression right;
+	boolean parentheses;
 	
-	public BinaryExpression() {
-		//can set attributes later, allows for flexibility
+	public BinaryExpression(boolean isParentheses){
+		parentheses = isParentheses;
+	}
+	
+	public void setExpression(BinaryExpression expr){
+		this.left = expr.left;
+		this.op = expr.op;
+		this.right = expr.right;
+	}
+	
+	public BinaryExpression(){
+		parentheses = false;
 	}
 	
 	
@@ -74,12 +85,14 @@ public class BinaryExpression extends Expression implements Node {
 	
 	@Override
 	public void prettyPrint(StringBuffer sb) {
+		if(parentheses) sb.append("(");
 		left.prettyPrint(sb);
 		Token tool = new Token(op.value, 0);
 		sb.append(" ");
 		sb.append(tool.toString());
 		sb.append(" ");
 		right.prettyPrint(sb);
+		if(parentheses) sb.append(")");
 		
 	}
 }

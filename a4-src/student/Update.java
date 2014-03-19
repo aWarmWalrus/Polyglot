@@ -9,7 +9,7 @@ public class Update extends AbstractNode{
 		this.mem = mem;
 		this.assigned = assigned;
 	}
-	
+
 	public Update(){
 		mem = new SensorMem();
 		mem.setOption(Token.MEM);
@@ -25,8 +25,6 @@ public class Update extends AbstractNode{
 	
 	@Override
 	public int size() {
-		//end of the tree; update will only assign to a mem[] location
-//		mutationNum++;
 		return 1;
 	}
 

@@ -572,7 +572,9 @@ public class ParserImpl implements Parser {
 			if(thisSM.index != null) return thisSM;
 			System.out.println(bucket.toString());
 			System.out.println(wasteofmemory.toString());
-			return parseExpression(wasteofmemory);
+			expression = new BinaryExpression(true);
+			expression.setExpression((BinaryExpression) parseExpression(wasteofmemory));
+			return expression;
 		}
 		
 		else{
