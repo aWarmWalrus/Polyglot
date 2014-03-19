@@ -1,13 +1,18 @@
 package mutations;
 
+import java.util.Random;
+
 import student.AbstractNode;
 import student.Node;
 import student.Program;
 
 public class RuleSetMutation extends Mutation {
-
+	
+	Random rand	= new Random(3634);;
+	
 	public RuleSetMutation(Critter crit, Program program) {
 		super(crit, program);
+		rand = new Random(3634);
 	}
 	
 	public RuleSetMutation(Program program) {
@@ -22,13 +27,6 @@ public class RuleSetMutation extends Mutation {
 	 * @return a Node
 	 */
 	public Node ruleMutation() {
-
-		// total number of nodes to choose from:
-		int programSize = nodeToMutate.size();
-
-		// we choose a random number that represents one Node
-		chosenNodeID = rand.nextInt(programSize);
-		
 		int mutationType = rand.nextInt(5);
 		if (mutationType == 0) {
 			((AbstractNode)nodeToMutate).remove();

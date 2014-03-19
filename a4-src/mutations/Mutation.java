@@ -28,11 +28,12 @@ public class Mutation {
 	public Mutation(Critter crit, Program node) {
 		critter = crit; // needs this for purposes of editing memory
 		nodeToMutate = node;
-
+		rand = new Random();
 	}
 	
 	public Mutation(Program node) {
 		nodeToMutate = node;
+		rand = new Random();
 	}
 
 	/**
@@ -42,6 +43,7 @@ public class Mutation {
 	 */
 	public Node makeMutation() {
 		// there is 3/4 chance that we will just return the original program
+		
 		if (rand.nextInt(4) != 0) {
 			return noMutation();
 		} else { // if the number == 0

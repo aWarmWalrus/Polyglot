@@ -44,6 +44,30 @@ public class Rule extends AbstractNode {
     	this.updates = updates;
     }
     
+    /**
+     * Gets the condition if there is one.
+     * @return condition if it exists
+     */
+    public Condition getCondition(){
+    	return condition;
+    }
+
+    /**
+     * Gets the action.
+     * @return action if it exists
+     */
+    public Action getAction(){
+    	return action;
+    }
+    
+    /**
+     * Gets the updates
+     * @return updates
+     */
+    public ArrayList<Update> getUpdates(){
+    	return updates;
+    }
+    
     
     /**
      * Will be called after all the set methods are called.
@@ -70,7 +94,7 @@ public class Rule extends AbstractNode {
 		if (action.actionValue != 0){ //if it is not a NONE type
 			numUpdatesActions += 1; //we add the action to the count
 		}
-		return numUpdatesActions + 1; //include the Rule in the size
+		return condition.size() + numUpdatesActions + 1; //include the Rule in the size
 	}
 
 	@Override

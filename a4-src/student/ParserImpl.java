@@ -27,7 +27,7 @@ public class ParserImpl implements Parser {
 	 * 
 	 */
 	public Program parse(Reader r) {
-		System.out.println("called parse(), calling parseProgram()");
+		//System.out.println("called parse(), calling parseProgram()");
 		reader = r;
 		tokenizer = new Tokenizer(reader);
 		ArrayList<Token> allTokens = new ArrayList<Token>();
@@ -52,15 +52,15 @@ public class ParserImpl implements Parser {
 	 *             if there the input tokens have invalid syntax
 	 */
 	public Program parseProgram(ArrayList<Token> tokens) throws SyntaxError {
-		System.out.println("called parseProgram()");
+		//System.out.println("called parseProgram()");
 		program = new Program();
 		ArrayList<Token> ruleTokens = new ArrayList<Token>();
 		for(Token i : tokens){
 			if(i.getType() != Token.SEMICOLON){
 				ruleTokens.add(i);
 			} else {
-				System.out.println();
-				System.out.println("+The Rule: " + ruleTokens.toString());
+				//System.out.println();
+				//System.out.println("+The Rule: " + ruleTokens.toString());
 				program.rules.add(parseRule(ruleTokens));
 				ruleTokens.clear();
 			}
@@ -76,7 +76,7 @@ public class ParserImpl implements Parser {
 	 * @throws SyntaxError
 	 */
 	public Rule parseRule(ArrayList<Token> tokens) throws SyntaxError {
-//		System.out.println("called parseRule()");
+//		//System.out.println("called parseRule()");
 		ArrayList<Token> bucket = new ArrayList<Token>();
 		Rule thisRule = new Rule();
 		int arrows = 0;
@@ -86,12 +86,12 @@ public class ParserImpl implements Parser {
 			} else if (i.getType() == Token.ARR){
 				arrows++;
 				if (arrows == 2) throw new SyntaxError("");
-				System.out.println("    -The Condition: " + bucket.toString());
+				//System.out.println("    -The Condition: " + bucket.toString());
 				thisRule.setCondition(parseCondition(bucket));
 				bucket.clear();
 			}
 		}
-		System.out.println("    -The Command: " + bucket.toString());
+		//System.out.println("    -The Command: " + bucket.toString());
 		thisRule.setAction(parseAction(bucket));
 		thisRule.addUpdates(parseUpdate(bucket));
 		thisRule.checkSemantic();
@@ -108,7 +108,7 @@ public class ParserImpl implements Parser {
 	 */
 	public Condition parseCondition(ArrayList<Token> tokens) 
 			throws SyntaxError {
-//		System.out.println("called parseCondition()");
+//		//System.out.println("called parseCondition()");
 		int status = 0;
 		ArrayList<Token> bucket = new ArrayList<Token>();
 		
@@ -116,7 +116,7 @@ public class ParserImpl implements Parser {
 		if(!containsToken(tokens, Token.OR) && 
 				!containsToken(tokens, Token.AND)){
 			//there is no AND or OR operators here. Must be a relation.
-			System.out.println("          >Relation: " + tokens.toString());
+			//System.out.println("          >Relation: " + tokens.toString());
 			return parseRelation(tokens);
 		}
 		
@@ -132,9 +132,9 @@ public class ParserImpl implements Parser {
 					if(containsToken(tokens, Token.OR)) bucket.add(i);
 					continue;
 				} else if (i.getType() == Token.OR){
-					System.out.println("       >Left: " + bucket.toString());
+					//System.out.println("       >Left: " + bucket.toString());
 					condition.setOp(BinaryConditionOperator.OR);
-					System.out.println("       >Operator: " + BinaryConditionOperator.OR);
+					//System.out.println("       >Operator: " + BinaryConditionOperator.OR);
 					condition.setLeft(parseCondition(bucket));
 					bucket.clear();
 					continue;
@@ -143,9 +143,9 @@ public class ParserImpl implements Parser {
 						bucket.add(i);
 						continue;
 					}
-					System.out.println("       >Left: " + bucket.toString());
+					//System.out.println("       >Left: " + bucket.toString());
 					condition.setOp(BinaryConditionOperator.AND);
-					System.out.println("       >Operator: " + BinaryConditionOperator.AND);
+					//System.out.println("       >Operator: " + BinaryConditionOperator.AND);
 					condition.setLeft(parseCondition(bucket));
 					bucket.clear();
 					continue;
@@ -175,13 +175,13 @@ public class ParserImpl implements Parser {
 		}
 		
 		if(!bucket.isEmpty()){
-			System.out.println("       >Right: " + bucket.toString());
+			//System.out.println("       >Right: " + bucket.toString());
 			condition.setRight(parseCondition(bucket));
 
 			return condition;
 			
 		}
-		System.out.println("THIS NEVER REALLY HAPPENS DOES IT?");
+		//System.out.println("THIS NEVER REALLY HAPPENS DOES IT?");
 		return condition;
 	}
 	
@@ -194,7 +194,7 @@ public class ParserImpl implements Parser {
 	 * @throws SyntaxError
 	 */
 	public ArrayList<Update> parseUpdate(List<Token> tokens) throws SyntaxError{
-//		System.out.println("called parseUpdate()");
+//		//System.out.println("called parseUpdate()");
 		int status = 0;
 		ArrayList<Token> expr = new ArrayList<Token>();
 		ArrayList<Update> updates = new ArrayList<Update>();
@@ -219,7 +219,7 @@ public class ParserImpl implements Parser {
 				if (i.getType() != Token.RBRACKET)
 					expr.add(i);
 				else{
-					System.out.println("        >Update Left: mem" + expr.toString());
+					//System.out.println("        >Update Left: mem" + expr.toString());
 					thisUpdate.setMemIndex(parseExpression(expr));
 					expr.clear();
 					status = 3;
@@ -242,7 +242,7 @@ public class ParserImpl implements Parser {
 			else if (status == 4) {
 				if (i.isAction()){
 					//the current token is an action
-					System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
+					//System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
 					if(expr.isEmpty()) throw new SyntaxError("Missing arguments");
 					thisUpdate.setAssignment(parseExpression(expr));
 				} else if (i.getType() == Token.MEM
@@ -258,7 +258,7 @@ public class ParserImpl implements Parser {
 					throw new SyntaxError("You have two operators in a row " +
 							"or an operator directly behind an assign token");
 				else{
-					System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
+					//System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
 					expr.add(i);
 				}
 			}
@@ -279,7 +279,7 @@ public class ParserImpl implements Parser {
 					status = 4;
 				} else if(i.getType() == Token.MEM){
 					//in the event that there is still another update
-					System.out.println("        >Update Right: " + expr.toString());
+					//System.out.println("        >Update Right: " + expr.toString());
 					thisUpdate.setAssignment(parseExpression(expr));
 					updates.add(thisUpdate);
 					expr.clear();
@@ -287,7 +287,7 @@ public class ParserImpl implements Parser {
 					status = 1;
 					continue;
 				} else {	//END OF THE UPDATE!!!! :o
-					System.out.println("         >Update Right : " + expr.toString());
+					//System.out.println("         >Update Right : " + expr.toString());
 					thisUpdate.setAssignment(parseExpression(expr));
 					updates.add(thisUpdate);
 					thisUpdate = new Update();
@@ -299,7 +299,7 @@ public class ParserImpl implements Parser {
 		//The big loop upstairs won't return an assignment if there is no tokens
 		//after the last token of the assignment. This catches that.
 		if(!expr.isEmpty()){
-			System.out.println("         >Update Right: " + expr.toString());
+			//System.out.println("         >Update Right: " + expr.toString());
 			thisUpdate.setAssignment(parseExpression(expr));
 			updates.add(thisUpdate);
 		}
@@ -316,7 +316,7 @@ public class ParserImpl implements Parser {
 	 */
 	public Action parseAction(ArrayList<Token> tokens) throws SyntaxError{
 		
-//		System.out.println("called parseAction");
+//		//System.out.println("called parseAction");
 		
 		//check every token passed to it
 		for(Token i : tokens){
@@ -329,7 +329,7 @@ public class ParserImpl implements Parser {
 					
 					//the action that matches the token's type
 					if (action.getValue() == i.getType()){
-						System.out.print("        >The Action: " + i);
+						//System.out.print("        >The Action: " + i);
 						
 						//special case if it is TAG or SERVE action type
 						if (i.getType() == Token.TAG ||
@@ -357,15 +357,15 @@ public class ParserImpl implements Parser {
 								expr.add(k);
 							}
 							
-							System.out.print(expr);
+							//System.out.print(expr);
 						}
 						
-						System.out.println();
+						//System.out.println();
 						return action;
 					}	
 				}
 				
-				System.out.println("There is a bug here");
+				//System.out.println("There is a bug here");
 				return Action.NONE;
 			}
 		}
@@ -396,9 +396,9 @@ public class ParserImpl implements Parser {
 					continue;
 				}
 				if (i.isComp()){ 		//there is a possibility of there being two equality signs here. syntax error here!
-					System.out.println("             ~LeftExpr: " + bucket.toString());
+					//System.out.println("             ~LeftExpr: " + bucket.toString());
 					relation.setLeft(parseExpression(bucket));
-					System.out.println("             ~RelOpera: " + RelOperator.getRel(i.getType()));
+					//System.out.println("             ~RelOpera: " + RelOperator.getRel(i.getType()));
 					relation.setRel(RelOperator.getRel(i.getType()));
 					bucket.clear();
 					continue;
@@ -408,7 +408,7 @@ public class ParserImpl implements Parser {
 			
 			else if(status == 1){
 				if(i.getType() == Token.RBRACE){
-					System.out.println("  :o         ~A Nested Condition!: " + bucket.toString());
+					//System.out.println("  :o         ~A Nested Condition!: " + bucket.toString());
 					relation.setCondition(parseCondition(bucket));
 					return relation;
 				}
@@ -416,7 +416,7 @@ public class ParserImpl implements Parser {
 			}
 		}
 		if(bucket.isEmpty()) throw new SyntaxError("Missing a righthand expression!");
-		System.out.println("             ~RightExp: " + bucket.toString());
+		//System.out.println("             ~RightExp: " + bucket.toString());
 		relation.setRight(parseExpression(bucket));
 		return relation;
 	}
@@ -438,7 +438,7 @@ public class ParserImpl implements Parser {
 			if (tokens.get(0).getType() != Token.NUM)
 				throw new SyntaxError("I don't know what do with this one token. it's not a number");
 			NumToken num = (NumToken) tokens.get(0);
-			System.out.println("                 @Num: " + num.value);
+			//System.out.println("                 @Num: " + num.value);
 			return new Num(num.value);
 		}
 		
@@ -462,8 +462,8 @@ public class ParserImpl implements Parser {
 				//will go into this if there is no other mulops. parses left then everything
 				//else goes into the right bucket.
 				else if (i.isAddOp()){
-					System.out.println("                 @Left: " + bucket.toString());
-					System.out.println("                 @Op  : " + i.toString());
+					//System.out.println("                 @Left: " + bucket.toString());
+					//System.out.println("                 @Op  : " + i.toString());
 					expression.setOp(i.getType());
 					expression.setLeft(parseExpression(bucket));
 					status = 4;
@@ -478,8 +478,8 @@ public class ParserImpl implements Parser {
 						bucket.add(i);
 						continue;
 					}
-					System.out.println("                 @Left: " + bucket.toString());
-					System.out.println("                 @Op  : " + i.toString());
+					//System.out.println("                 @Left: " + bucket.toString());
+					//System.out.println("                 @Op  : " + i.toString());
 					expression.setOp(i.getType());
 					expression.setLeft(parseExpression(bucket));
 					status = 4;
@@ -526,7 +526,7 @@ public class ParserImpl implements Parser {
 				if (!i.isMulOp() && !i.isAddOp()){
 					throw new SyntaxError("yo expected a operator here bro");
 				}
-				System.out.println("                 @Op: " + i.toString());
+				//System.out.println("                 @Op: " + i.toString());
 				expression.setOp(i.getType());
 				status = 4;
 				continue;
@@ -556,7 +556,7 @@ public class ParserImpl implements Parser {
 				if(i.getType() == Token.RBRACKET){
 					status--;
 					if(status == 10){
-						System.out.println("                    ^Sensormem: " + expr.toString());
+						//System.out.println("                    ^Sensormem: " + expr.toString());
 						thisSM.setExpression(parseExpression(expr));
 						wasteofmemory = (ArrayList<Token>) bucket.clone();
 						bucket.clear();
@@ -570,8 +570,8 @@ public class ParserImpl implements Parser {
 		
 		if(bucket.isEmpty()){
 			if(thisSM.index != null) return thisSM;
-			System.out.println(bucket.toString());
-			System.out.println(wasteofmemory.toString());
+			//System.out.println(bucket.toString());
+			//System.out.println(wasteofmemory.toString());
 			expression = new BinaryExpression(true);
 			expression.setExpression((BinaryExpression) parseExpression(wasteofmemory));
 			return expression;
@@ -579,10 +579,10 @@ public class ParserImpl implements Parser {
 		
 		else{
 			if(!wasteofmemory.isEmpty()){
-				System.out.println("                 @Left: " + wasteofmemory.toString());
+				//System.out.println("                 @Left: " + wasteofmemory.toString());
 				expression.setLeft(parseExpression(wasteofmemory));
 			}
-			System.out.println("                 @Right: " + bucket.toString());
+			//System.out.println("                 @Right: " + bucket.toString());
 			expression.setRight(parseExpression(bucket));
 			return expression;
 		}
