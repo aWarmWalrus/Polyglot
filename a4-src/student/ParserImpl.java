@@ -26,7 +26,7 @@ public class ParserImpl implements Parser {
 	 * @return program 
 	 * 
 	 */
-	public Program parse(Reader r) {
+	public Program parse(Reader r) throws SyntaxError{
 		//System.out.println("called parse(), calling parseProgram()");
 		reader = r;
 		tokenizer = new Tokenizer(reader);
@@ -210,22 +210,27 @@ public class ParserImpl implements Parser {
 			else if (status == 1) {
 				if (i.getType() != Token.LBRACKET)
 					throw new SyntaxError("");
-				status = 2;
+				status = -1;
 				continue;
 			} 
 			
 			//ensnare the expression inside the brackets
-			else if (status == 2) {
-				if (i.getType() != Token.RBRACKET)
-					expr.add(i);
-				else{
+			else if (status < 0) {
+				if(i.getType() == Token.LBRACKET){
+					status--;
+				}
+				else if (i.getType() == Token.RBRACKET)
+					status++;
+					
+				if(status == 0){
 					//System.out.println("        >Update Left: mem" + expr.toString());
 					thisUpdate.setMemIndex(parseExpression(expr));
 					expr.clear();
 					status = 3;
 					continue;
 				}
-			} 
+				expr.add(i);
+			}
 			
 			//Just checking syntax. If there's no assign, then everything we know is wrong
 			else if (status == 3) {

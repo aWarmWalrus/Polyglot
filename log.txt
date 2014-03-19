@@ -1,0 +1,395 @@
+commit 52a35549bb2458ec48279a0df5cbf59f54a17b50
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 23:48:00 2014 -0400
+
+    bliu
+
+commit f80b860a13aefc78cb8faa6d6595747fc6975699
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 23:13:30 2014 -0400
+
+    Program mutations are done!!!!! and hopefully correct
+
+commit 8124a77394b691c8473df7ad8163db27ce0ed8e0
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 22:43:00 2014 -0400
+
+    all the sizes of the world
+
+commit d0a544767d91037564f481d6cfb4647d35f86037
+Merge: 7b7272e 4eece79
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 22:03:51 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    fixed some merge conflicts
+    Conflicts:
+    	a4-src/student/Update.java
+
+commit 7b7272edd12a6e448fe138f983ec17ce63c612df
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 22:00:03 2014 -0400
+
+    Implemented Deep Copy! hope it works...
+
+commit 4eece79c4432cc1f889eccb891775a669add9a38
+Merge: bcf9939 153edfa
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 21:54:01 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/Parse.java
+
+commit bcf993979906c0a745a5e7f97f8f4827acc171d5
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 21:52:33 2014 -0400
+
+    what is happening
+
+commit 3b43122a615f53eb619a852738e55dd48f0dfb0e
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 21:48:39 2014 -0400
+
+    IKLJ
+
+commit 153edfa138d12220464f0b4b9b09ad248ce52e6c
+Merge: 5605b26 28b28e7
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 20:15:02 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+
+commit 5605b26658b73fd370918f17369525e4885f7a83
+Author: apokellypse <kly24@cornell.edu>
+Date:   Tue Mar 18 20:14:27 2014 -0400
+
+    more mutation business
+
+commit 28b28e7d60fbf1c9ad4f873be8af61057033c8b9
+Author: unknown <CIT-Labs@CIT-PHILLIPS-16.cornell.edu>
+Date:   Tue Mar 18 15:40:21 2014 -0400
+
+    Pretty print works now. Syntactic sugar too.
+
+commit d1adf00d297058818f599b639d188c5888006484
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 03:13:37 2014 -0400
+
+     Pretty print almost works 
+
+commit de943618cfc712ae5ffddc5441e43b3dffac61e7
+Merge: 1cc7d38 8caf158
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 01:02:51 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/Parse.java
+
+commit 1cc7d38706ac7a9720a34a331fc3382e7fc0c660
+Author: unknown <CIT-Labs@CIT-PHILLIPS-26.cornell.edu>
+Date:   Tue Mar 18 00:59:33 2014 -0400
+
+    First finished version of the Parse Tree
+
+commit 8caf158f17561d33c6a4a5932b19d7cdc3f54c79
+Author: apokellypse <kly24@cornell.edu>
+Date:   Mon Mar 17 23:48:46 2014 -0400
+
+    Set up more mutation structure, added a few mutations.
+    Next Goal: implementing deep copies, fixing the size()
+    functions, and impl. the random Node picking function. Yeah.
+    Congrats on the Parse tree. Now watch me mutate it. mwhahaha
+
+commit 260fbcc76b2001fa7d5d450b9b1e780365884b50
+Author: apokellypse <kly24@cornell.edu>
+Date:   Mon Mar 17 12:01:04 2014 -0400
+
+    Added more structure, finalized Mutation design. sTarted
+    implementation for the Program fault injection.
+
+commit 6ba40cbf32607d918033cf95964b63e16186b72f
+Author: apokellypse <kly24@cornell.edu>
+Date:   Mon Mar 17 11:28:12 2014 -0400
+
+    More probability details added. Did some OOP magic with the Mutations.
+    framework is set - now I just have to implement.
+
+commit 2ca837c431dd1e01a440e26e3b4283ece9a7866c
+Author: apokellypse <kly24@cornell.edu>
+Date:   Mon Mar 17 00:44:52 2014 -0400
+
+    Put Mutations in a new package because this will promote
+    more organization. Right now the attribute mutations are
+    theoretially done but not tested. Working on rule mutations right now.
+
+commit 2428e9393922dfa7c033a171870d0532dafa3128
+Merge: 3d68a92 4437a24
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 23:15:04 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/Parse.class
+    	a4-src/student/ParserImpl.class
+    	a4-src/student/RelOperator.class
+    	a4-src/student/Relation.class
+
+commit 3d68a923ff424cf1f32ff867d38ae0aa5d5aed32
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 23:06:03 2014 -0400
+
+    updates to parser
+
+commit 4437a2425117201ca02352447de348b65298ed18
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sun Mar 16 19:49:47 2014 -0400
+
+    death to .class files
+
+commit 5ce8e88d2239d02228985a16e142eee0ea88a9d0
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sun Mar 16 19:36:59 2014 -0400
+
+    more fixes because my step-by-step thing didn't work :((((
+
+commit 4bd2293bd6f64adfbf9c9c6ab4f10d44f0dba51e
+Merge: 1fc85bc 9819c55
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 16:20:45 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/Action.class
+    	a4-src/student/ActionSwitch.class
+    	a4-src/student/BinaryCondition.class
+    	a4-src/student/Parse.class
+    	a4-src/student/ParserImpl.class
+    	a4-src/student/Program.class
+    	a4-src/student/Relation.class
+    	a4-src/student/Rule.class
+    	a4-src/student/SyntaxError.class
+    	a4-src/student/Token.class
+    	a4-src/testing/ParserTest.class
+
+commit 1fc85bc65f0091b309f538e5972f2961860786d1
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 16:18:26 2014 -0400
+
+    Just doin what Kelly told me to do 0.o
+
+commit be3e8704b20a266a80b6de344e5136db1b1881d3
+Merge: 5212e20 fb03a58
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 15:57:12 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/BinaryCondition.class
+    	a4-src/student/BinaryCondition.java
+    	a4-src/student/ParserImpl.class
+    	a4-src/student/Program.class
+    	a4-src/student/Program.java
+    	a4-src/student/Rule.class
+    	a4-src/student/Rule.java
+
+commit 9819c55c6ea76002f18b988c4d8e9c0c8b7edd09
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sun Mar 16 15:47:48 2014 -0400
+
+    Hopefully removed those silly .class files
+
+commit 5212e20cf9e4b370dfe542ecafc2f3df7324f08c
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 15:36:37 2014 -0400
+
+    my new RelOperator class
+
+commit 90f034084c8104928dcaf9e4db14aea211af2591
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Sun Mar 16 15:35:34 2014 -0400
+
+    IM SORRY IF I MESS SOMETHING UP
+
+commit fb03a587a4f1db62b43bcc7bd5ca529b3a8f6f27
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sun Mar 16 15:35:25 2014 -0400
+
+    Added a Critter class to store memory. Has fault injection
+    comments inside Class Critter as well. Fault injection structure half
+    complete. Beginning implementation today. Goal: complete structure
+    today and implement 2 major mutations.
+
+commit 608d12b347981c4107b6ec502900d7ed953b6217
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sat Mar 15 16:45:25 2014 -0400
+
+    I added more things to the Mutation class, added a new
+    constructor for Rule (for Mutation purposes) organized the Rule class
+
+commit 5b0b12fbdc6859577a8f7a046109a4b983a1f26a
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sat Mar 15 15:45:34 2014 -0400
+
+    I added a Mutation class!! be proud of me
+
+commit 78fed639900ffb7d7130a23d8be891e4942a995e
+Merge: 06acfe9 51be7e7
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sat Mar 15 01:47:39 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/AbstractNode.class
+    	a4-src/student/ActionSwitch.class
+    	a4-src/student/Parse.class
+    	a4-src/student/Parse.java
+    	a4-src/student/ParserImpl.class
+    	a4-src/student/Rule.class
+    	a4-src/student/Update.class
+
+commit 06acfe97b2488f5cf70782ea23a366ed8b475299
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sat Mar 15 01:23:37 2014 -0400
+
+    I hate .class files
+
+commit a3d47b8e80f848c559b472537f3cea3cffa11074
+Author: apokellypse <kly24@cornell.edu>
+Date:   Sat Mar 15 01:18:12 2014 -0400
+
+    Set up framework for a hopefully successful implementation of mutate().
+
+commit 51be7e7b8fca511e9002acec6e08f5c14daf5b16
+Author: unknown <CIT-Labs@CIT-PHILLIPS-22.cornell.edu>
+Date:   Sat Mar 15 01:17:08 2014 -0400
+
+    pants are on fire
+
+commit f72f3d2b1290cc18060e8e3c04020441c3d3a717
+Merge: 916ebeb 0e40e58
+Author: unknown <CIT-Labs@CIT-PHILLIPS-22.cornell.edu>
+Date:   Sat Mar 15 01:09:44 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/ActionSwitch.class
+    	a4-src/student/Rule.class
+    	a4-src/student/Rule.java
+    	a4-src/student/Update.class
+
+commit 916ebeb81f6e8a730cfdbb159c123842c271cbbd
+Author: unknown <CIT-Labs@CIT-PHILLIPS-22.cornell.edu>
+Date:   Sat Mar 15 00:52:40 2014 -0400
+
+    I did some amazing things with life.
+
+commit 0e40e5851a491322c7032185942ed7da97630798
+Merge: 5e24d55 f7b18e2
+Author: apokellypse <kly24@cornell.edu>
+Date:   Fri Mar 14 22:57:23 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+
+commit 5e24d559d53503ae6d1eff7fd859546e97c7fcfa
+Author: apokellypse <kly24@cornell.edu>
+Date:   Fri Mar 14 22:55:26 2014 -0400
+
+    Rearranged OOP structure; added size() partial implementation
+
+commit f7b18e282b557ba335437031d96935581ff4d55f
+Merge: 2e79ed2 d237085
+Author: unknown <CIT-Labs@CIT-PHILLIPS-22.cornell.edu>
+Date:   Fri Mar 14 21:56:32 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+    
+    Conflicts:
+    	a4-src/student/Parse.class
+    	a4-src/student/Parse.java
+    	a4-src/student/ParserImpl.class
+
+commit 2e79ed2fccf7657ac7c909c7628182a82bd520eb
+Author: unknown <CIT-Labs@CIT-PHILLIPS-22.cornell.edu>
+Date:   Fri Mar 14 21:32:56 2014 -0400
+
+    My changes to the architecture of the Condition side of Rule
+
+commit d2370850217936273f4e513389be4f6eae1c4895
+Author: apokellypse <kly24@cornell.edu>
+Date:   Fri Mar 14 21:30:20 2014 -0400
+
+    fixed OOP hierarchy to account for the new member of the Node family: AbstractNode
+
+commit 1600d555bb47f8157f7f85cfbddb54331adef659
+Author: apokellypse <kly24@cornell.edu>
+Date:   Fri Mar 14 21:25:29 2014 -0400
+
+    Added AbstractNode Class for mutation purposes
+
+commit 4c9dbbcf8b36c30d76f5dec65439f75d92a7bde8
+Author: unknown <CIT-Labs@CIT-RPCC-17.cornell.edu>
+Date:   Fri Mar 14 17:02:40 2014 -0400
+
+    Fixed your mistake kelly, and i am overriding your commit because all i
+    had to do was make the changes that you made in Token and Tokenizer.
+
+commit 930aa391a7837358ff3d17f0419a4c8e43ce5e80
+Author: unknown <CIT-Labs@CIT-APPEL-02.cornell.edu>
+Date:   Fri Mar 14 10:01:42 2014 -0400
+
+    Fixed some of the things I did to condition. Now there is a relational
+    Class
+
+commit 6e51f867e7679888b6874de1df3d7093e9784c68
+Author: unknown <CIT-Labs@CIT-APPEL-02.cornell.edu>
+Date:   Thu Mar 13 21:54:16 2014 -0400
+
+    Changed Condition to a class instead of an interface. Probably not right
+    so we will have to check/understand why that was an interface to begin
+    with
+
+commit 67d080e268f55e0ebec49d1dfd1196ded3ac8dab
+Author: unknown <CIT-Labs@CIT-APPEL-02.cornell.edu>
+Date:   Thu Mar 13 20:38:17 2014 -0400
+
+    Adding structure to ParserImpl
+
+commit 3cf238cae11bcbafb807b5304ea1df46e8760755
+Author: apokellypse <kly24@cornell.edu>
+Date:   Wed Mar 12 22:52:37 2014 -0400
+
+    Added a new class: ActionSwitch
+
+commit 1a559eced8d35afd5adfd6fd0f546a8ac185c26e
+Author: aWarmWalrus <MisterCharlesQian@gmail.com>
+Date:   Mon Mar 10 23:56:33 2014 -0400
+
+    first copilot session 3/10/14
+
+commit 4c4e12500e386930e8be80c3663576730804af18
+Merge: f88cbc8 5d3c956
+Author: aWarmWalrus <MisterCharlesQian@gmail.com>
+Date:   Mon Mar 10 22:37:30 2014 -0400
+
+    Merge branch 'master' of https://github.com/aWarmWalrus/Polyglot
+
+commit f88cbc8804fce64487ab92ef0db1eff22a34c172
+Author: aWarmWalrus <MisterCharlesQian@gmail.com>
+Date:   Mon Mar 10 22:21:45 2014 -0400
+
+    adding the a4-src files
+
+commit 5d3c9569f6774c17768aa798bd72d70013462f5d
+Author: Charles Qian <aWarmWalrus@users.noreply.github.com>
+Date:   Mon Mar 10 19:05:13 2014 -0700
+
+    Initial commit

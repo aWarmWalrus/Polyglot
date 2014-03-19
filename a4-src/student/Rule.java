@@ -172,9 +172,9 @@ public class Rule extends AbstractNode {
 		if(updates != null)
 			for(int i = 0; i < updates.size(); i++){
 				updates.get(i).prettyPrint(sb);
-				if(i + 1 != updates.size()) sb.append("\n");
+				if(i + 1 != updates.size()) sb.append(" $ ");
 				if(i + 1 == updates.size() && action.getValue() != 0)
-					sb.append(", ");
+					sb.append(" $ ");
 			}
 		action.prettyPrint(sb);
 	}

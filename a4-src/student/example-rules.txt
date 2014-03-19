@@ -25,7 +25,9 @@ mem[3] < (10 + mem[7])
 mem[4] > 1000 --> mem[7] := mem[7] + mem[5]
                   bud;
 
-mem[5+3-10] = 20 --> mem[5 + 90 - 85 - 3] := 5 + 3 + random[9] * 5;
+mem[5+3-10] = 20 --> mem[mem[2]] := 5 + 3 + random[9] * 5
+					 mem[3] := 12
+					 mem[7] := ahead[2];
 
 3 * (3 - ahead[6 + 3]) <= 5 mod 6 --> attack;
 

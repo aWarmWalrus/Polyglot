@@ -28,7 +28,7 @@ public class ParserTest {
 	ArrayList<Rule> rules;
 	
 	@Before
-	public void beforeTests() throws FileNotFoundException{
+	public void beforeTests() throws FileNotFoundException, SyntaxError{
 		reader = new BufferedReader(new FileReader("J:\\KINGSTON\\CS2112\\Polyglot1\\testfile.txt"));
 		t = ParserFactory.getParser();
 		x = t.parse(reader);
