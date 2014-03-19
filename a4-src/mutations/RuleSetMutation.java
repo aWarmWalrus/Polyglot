@@ -6,12 +6,12 @@ import student.Program;
 
 public class RuleSetMutation extends Mutation {
 
-	public RuleSetMutation(Critter crit, Program program) {
-		super(crit, program);
+	public RuleSetMutation(Critter crit, Node node) {
+		super(crit, node);
 	}
 	
-	public RuleSetMutation(Program program) {
-		super(program);
+	public RuleSetMutation(Node node) {
+		super(node);
 	}
 	
 	
@@ -24,10 +24,10 @@ public class RuleSetMutation extends Mutation {
 	public Node ruleMutation() {
 
 		// total number of nodes to choose from:
-		int programSize = nodeToMutate.size();
+//		int programSize = nodeToMutate.size();
 
 		// we choose a random number that represents one Node
-		chosenNodeID = rand.nextInt(programSize);
+//		chosenNodeID = rand.nextInt(programSize);
 		
 		int mutationType = rand.nextInt(5);
 		if (mutationType == 0) {

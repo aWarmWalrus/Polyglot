@@ -17,7 +17,7 @@ public class Mutation {
 	// random number generator
 	protected Random rand;
 	protected Critter critter;
-	protected Program nodeToMutate; // should I make this final?
+	protected Node nodeToMutate; // should I make this final?
 	public int chosenNodeID;
 
 	/**
@@ -25,13 +25,13 @@ public class Mutation {
 	 * @param Critter object.
 	 * @param Node object
 	 */
-	public Mutation(Critter crit, Program node) {
+	public Mutation(Critter crit, Node node) {
 		critter = crit; // needs this for purposes of editing memory
 		nodeToMutate = node;
 
 	}
 	
-	public Mutation(Program node) {
+	public Mutation(Node node) {
 		nodeToMutate = node;
 	}
 

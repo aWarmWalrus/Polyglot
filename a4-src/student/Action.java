@@ -22,6 +22,28 @@ public enum Action { //13 types
 		expr = expression;
 	}
 	
+	public Action randomchoice() {
+		int choice = rand.nextInt(13);
+		int newAction = choice % 9;
+		return getAct(newAction);
+	}
+	
+	public static Action getAct(int token){
+		if(token == 10) return Action.WAIT;
+		else if(token == 11) return Action.FORWARD;
+		else if(token == 12) return Action.BACKWARD;
+		else if(token == 13) return Action.LEFT;
+		else if(token == 14) return Action.RIGHT;
+		else if(token == 15) return Action.EAT;
+		else if(token == 16) return Action.ATTACK;
+		else if(token == 17) return Action.GROW;
+		else if(token == 18) return Action.BUD;
+		else if(token == 19) return Action.MATE;
+		else if(token == 20) return Action.TAG;
+		else if(token == 21) return Action.SERVE;
+		else return Action.NONE;
+	}
+	
 	public void prettyPrint(StringBuffer sb){
 		if(actionValue != 0){
 			Token temp = new Token(actionValue, 0);

@@ -5,7 +5,7 @@ import student.Program;
 
 public class AttributeMutation extends Mutation {
 
-	public AttributeMutation(Critter crit, Program node) {
+	public AttributeMutation(Critter crit, Node node) {
 		super(crit, node);
 		// TODO Auto-generated constructor stub
 	}
