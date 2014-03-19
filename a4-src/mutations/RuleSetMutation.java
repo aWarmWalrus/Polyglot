@@ -4,13 +4,13 @@ import student.AbstractNode;
 import student.Node;
 import student.Program;
 
-public class RuleMutation extends Mutation {
+public class RuleSetMutation extends Mutation {
 
-	public RuleMutation(Critter crit, Program program) {
+	public RuleSetMutation(Critter crit, Program program) {
 		super(crit, program);
 	}
 	
-	public RuleMutation(Program program) {
+	public RuleSetMutation(Program program) {
 		super(program);
 	}
 	
@@ -23,7 +23,7 @@ public class RuleMutation extends Mutation {
 	 */
 	public Node ruleMutation() {
 
-		// total number of notes to choose from:
+		// total number of nodes to choose from:
 		int programSize = nodeToMutate.size();
 
 		// we choose a random number that represents one Node
@@ -50,8 +50,7 @@ public class RuleMutation extends Mutation {
 			((AbstractNode)nodeToMutate).cloneKid();
 		}
 
-		//TODO //DELETE THIS?
-		nodeToMutate.mutate();
+//		nodeToMutate.mutate();
 
 		// after the mutation there is another 1/4 chance that another
 		// mutation will happen

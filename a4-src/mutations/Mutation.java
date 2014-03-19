@@ -65,7 +65,7 @@ public class Mutation {
 
 		} else { // if the number == 1
 			
-			RuleMutation rule = new RuleMutation(critter, nodeToMutate);
+			RuleSetMutation rule = new RuleSetMutation(critter, nodeToMutate);
 			return rule.ruleMutation();
 		}
 
