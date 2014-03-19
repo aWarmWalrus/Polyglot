@@ -61,6 +61,9 @@ public class Program extends AbstractNode {
 			//the RuleSetMutation class takes care of probability
 			return rm.ruleMutation(); // calls mutation on the Program only
 		} else {
+			stackOfNodes.add(this); 
+			//we add the Program to the LinkedList to keep track of it
+			
 			thatNode = thatNode - 1; //narrowing down our probability
 			for (int i = 0; i < rules.size(); i++) {
 				if (rules.get(i).size() < thatNode){

@@ -7,16 +7,15 @@ import student.Node;
 import student.Program;
 
 public class RuleSetMutation extends Mutation {
-	
-	Random rand	= new Random(3634);;
-	
-	public RuleSetMutation(Critter crit, Program program) {
-		super(crit, program);
-		rand = new Random(3634);
+
+	Random rand = new Random();
+
+	public RuleSetMutation(Critter crit, Node node) {
+		super(crit, node);
 	}
 	
-	public RuleSetMutation(Program program) {
-		super(program);
+	public RuleSetMutation(Node node) {
+		super(node);
 	}
 	
 	
@@ -27,6 +26,7 @@ public class RuleSetMutation extends Mutation {
 	 * @return a Node
 	 */
 	public Node ruleMutation() {
+
 		int mutationType = rand.nextInt(5);
 		if (mutationType == 0) {
 			((AbstractNode)nodeToMutate).remove();
