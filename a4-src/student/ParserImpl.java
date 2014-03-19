@@ -616,7 +616,7 @@ public class ParserImpl implements Parser {
 	 * kind of token is encountered.
 	 */
 	public void consume(int curTok, int tokenType) throws SyntaxError {
-		
+		//TODO Charlie I think we're supposed to implement this? maybe?
 		throw new UnsupportedOperationException();
 	}
 	

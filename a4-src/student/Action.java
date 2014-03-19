@@ -1,11 +1,14 @@
 package student;
 
-public enum Action {
+import java.util.Random;
+
+public enum Action { //13 types
 	WAIT(10), FORWARD(11), BACKWARD(12), LEFT(13), RIGHT(14), EAT(15), 
 	ATTACK(16), GROW(17), BUD(18), MATE(19), TAG(20), SERVE(21), NONE(0);
 	
 	private int actionValue;
 	private Expression expr;
+	Random rand = new Random();
 	
 	Action(int value){
 		actionValue = value;		
