@@ -3,7 +3,6 @@ package student;
 public class Update extends AbstractNode{
 	
 	SensorMem mem;
-	Expression memIndex;
 	Expression assigned;
 	
 	public Update(){
@@ -33,7 +32,7 @@ public class Update extends AbstractNode{
 	@Override
 	public void prettyPrint(StringBuffer sb) {
 		sb.append("mem[");
-		memIndex.prettyPrint(sb);
+		mem.index.prettyPrint(sb);
 		sb.append("] := ");
 		assigned.prettyPrint(sb);
 	}
