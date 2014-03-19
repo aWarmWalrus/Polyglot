@@ -27,5 +27,11 @@ public enum BinaryConditionOperator {
 	 * The number of operators.
 	 */
 	public static final int NUM_OPS = VALUES.size();
+	
 
+	public static BinaryConditionOperator getBCO(int token){
+		if(token == 30) return BinaryConditionOperator.OR;
+		else if(token == 31) return BinaryConditionOperator.AND;
+		else return null;
+	}
 }

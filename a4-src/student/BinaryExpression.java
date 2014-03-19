@@ -1,9 +1,8 @@
 package student;
 
 /**
- * 
- * @author Kelly
  * @author aWarmWalrus
+ * @author Kelly
  *
  */
 public class BinaryExpression extends Expression implements Node {

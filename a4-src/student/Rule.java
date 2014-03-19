@@ -117,6 +117,9 @@ public class Rule extends AbstractNode {
 			RuleSetMutation rm = new RuleSetMutation(this);
 			// the RuleSetMutation class takes care of probability
 			return rm.ruleMutation(); // calls mutation on the Rule only
+		} else if (thatNode >= 1 && thatNode < condition.size() + 1) {
+			condition.mutate();
+			//weight of probability depends on size of condition
 		} else {
 			stackOfNodes.add(this);
 			// we add the Rule to the LinkedList to keep track of it
@@ -124,7 +127,7 @@ public class Rule extends AbstractNode {
 			thatNode = thatNode - 1;
 			if (isAction())
 				thatNode = thatNode - 1; // we discount the Action
-			// we are excluding a possible Action from this probability
+			thatNode = thatNode - 1; //we discount the Condition
 
 			for (int i = 0; i < updates.size(); i++) {
 				if (updates.get(i).size() < thatNode) {
