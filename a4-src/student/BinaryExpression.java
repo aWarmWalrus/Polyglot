@@ -68,8 +68,7 @@ public class BinaryExpression extends Expression implements Node {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return left.size() + right.size() + 1;
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class Update extends AbstractNode{
 	
 	@Override
 	public int size() {
-		return 1;
+		return mem.size() + assigned.size() + 1;
 	}
 
 	@Override

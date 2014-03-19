@@ -24,7 +24,7 @@ public class AbstractNode implements Node {
 	}
 	
 	
-	// Mutation Algorithm:
+	// Mutation Algorithm????:
 	// We call size() again and when the size accumulator reaches the
 	// randomNumber, we
 	// then mutate at that position

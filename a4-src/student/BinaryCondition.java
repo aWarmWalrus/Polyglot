@@ -51,7 +51,8 @@ public class BinaryCondition extends AbstractNode implements Condition {
 
 	@Override
 	public int size() {
-		return 1;
+		return left.size() + right.size() + 1;
+		//we add 1 to include the current node in the size count
 	}
 
 	// @Override

@@ -62,15 +62,15 @@ public class Rule extends AbstractNode {
 	@Override
 	public int size() {
 		//this iterates through the ArrayList of Update objects, calling size on each.
-		int accumulator = 0;
-		//number of Update Nodes
+		int numUpdatesActions = 0;
 		for (int i = 0; i < updates.size(); i++) {
-			accumulator += updates.get(i).size();
+			numUpdatesActions += updates.get(i).size();
 //			mutationNum ++;
 		}
-		//number of Action Nodes
-//		accumulator += actionSwitch.size();
-		return accumulator;
+		if (action.actionValue != 0){ //if it is not a NONE type
+			numUpdatesActions += 1; //we add the action to the count
+		}
+		return numUpdatesActions + 1; //include the Rule in the size
 	}
 
 	@Override

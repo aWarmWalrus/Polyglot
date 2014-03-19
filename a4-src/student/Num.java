@@ -8,6 +8,12 @@ public class Num extends Expression {		//WHY IS THIS ABSTRACT?
     public Num(int v) {
         value = v;
     }
+
+    @Override
+    public int size() {
+    	return 1;
+    }
+    
     
     @Override
 	public Node remove() {

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import mutations.Critter;
 import mutations.Mutation;
+import mutations.RuleMutation;
 
 /**
  * A representation of a critter program.
@@ -26,12 +27,12 @@ public class Program extends AbstractNode {
 	
 	@Override
 	public int size() {
-		int accumulator = 0;
+		int numRules = 0;
 		for (int i = 0; i < rules.size(); i++) {
-			accumulator += rules.get(i).size();
+			numRules += rules.get(i).size();
 //			mutationNum ++;
 		}
-		return accumulator;
+		return numRules + 1; //add one to include the Program in the count
 	}
 	
 	/**
@@ -45,8 +46,10 @@ public class Program extends AbstractNode {
 	//when we call mutate, then we will return a mutated Program
 	//this works because Program extends Node
 
+	
 	@Override
 	public Node mutate() {
+		RuleMutation rm = new RuleMutation(this);
 		for (int i = 0; i < rules.size(); i++) {
 			rules.get(i).mutate();
 		}

@@ -69,8 +69,13 @@ public class Relation extends AbstractNode implements Condition{
 	
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 1;
+		int count;
+		if(isCondition){
+			count = condition.size(); 
+		} else {
+			count = left.size() + right.size();
+		}
+		return count + 1; //add 1 to include the Relation in the count
 	}
 
 //	@Override

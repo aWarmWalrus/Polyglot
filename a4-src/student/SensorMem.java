@@ -41,6 +41,11 @@ public class SensorMem extends Expression{
 	}
 	
 	@Override
+	public int size() {
+		return index.size() + 1;
+	}
+	
+	@Override
 	public Expression deepCopy() {
 		Expression newExp = new SensorMem(index.deepCopy(), this.o);
 		return newExp;		
