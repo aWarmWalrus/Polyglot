@@ -2,11 +2,17 @@ package student;
 
 public class Update extends AbstractNode{
 	
+	SensorMem mem;
 	Expression memIndex;
 	Expression assigned;
 	
+	public Update(){
+		mem = new SensorMem();
+		mem.setOption(Token.MEM);
+	}
+	
 	public void setMemIndex(Expression expr){
-		memIndex = expr;
+		mem.setExpression(expr);
 	}
 	
 	public void setAssignment(Expression expr){
@@ -15,8 +21,6 @@ public class Update extends AbstractNode{
 	
 	@Override
 	public int size() {
-		//end of the tree; update will only assign to a mem[] location
-//		mutationNum++;
 		return 1;
 	}
 
