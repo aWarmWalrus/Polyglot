@@ -1,6 +1,8 @@
 package mutations;
 
 import student.AbstractNode;
+import student.Action;
+import student.ActionSwitch;
 import student.Node;
 
 public class RuleMutation extends Mutation {
@@ -30,19 +32,19 @@ public class RuleMutation extends Mutation {
 			((AbstractNode)nodeToMutate).remove();
 			//justify this design decision
 		}
-		if (mutationType == 1) {
+		else if (mutationType == 1) {
 			((AbstractNode)nodeToMutate).swapOrder();
 		}
-		if (mutationType == 2) {
+		else if (mutationType == 2) {
 			((AbstractNode)nodeToMutate).cloneSubtree();
 		}
-		if (mutationType == 3) {
+		else if (mutationType == 3) {
 			((AbstractNode)nodeToMutate).randomReplace();
 		}
-		if (mutationType == 4) {
+		else if (mutationType == 4) {
 			((AbstractNode)nodeToMutate).newParent();
 		}
-		if (mutationType == 5) {
+		else  { //(mutationType == 5)
 			((AbstractNode)nodeToMutate).cloneKid();
 		}
 
@@ -54,5 +56,14 @@ public class RuleMutation extends Mutation {
 		return makeMutation();
 	}
 	
-	
+	//When the Condition is true, then this action may be triggered.
+		public void triggerAction(Action act){
+			ActionSwitch aswitch = new ActionSwitch(act);
+			aswitch.takingAction();
+		}
+		
+	//For switching actions:
+		public void switchAction() {
+			
+		}
 }

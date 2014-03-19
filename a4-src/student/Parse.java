@@ -17,11 +17,11 @@ public class Parse {
 		try {
 			Num e = new Num(3);
 			
-			BufferedReader reader = new BufferedReader(new FileReader(
-					"J:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
-			
 //			BufferedReader reader = new BufferedReader(new FileReader(
-//					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
+//					"J:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));
+			
+			BufferedReader reader = new BufferedReader(new FileReader(
+					"C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
 			Token x = new Token(35, 2);
 			System.out.println(x.toString());
 			Parser godaddy = new ParserImpl();
