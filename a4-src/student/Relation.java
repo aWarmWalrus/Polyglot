@@ -118,7 +118,9 @@ public class Relation extends AbstractNode implements Condition{
 		else{
 			left.prettyPrint(sb);
 			Token temp = new Token(rel.getValue(), 0);
+			sb.append(" ");
 			sb.append(temp.toString());
+			sb.append(" ");
 			right.prettyPrint(sb);
 		}
 	}

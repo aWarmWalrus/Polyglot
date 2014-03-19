@@ -60,7 +60,9 @@ public class BinaryExpression extends Expression implements Node {
 	public void prettyPrint(StringBuffer sb) {
 		left.prettyPrint(sb);
 		Token tool = new Token(op.value, 0);
+		sb.append(" ");
 		sb.append(tool.toString());
+		sb.append(" ");
 		right.prettyPrint(sb);
 		
 	}

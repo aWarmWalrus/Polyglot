@@ -81,8 +81,10 @@ public class Update extends AbstractNode{
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {
-		// TODO Auto-generated method stub
-		
+		sb.append("mem[");
+		memIndex.prettyPrint(sb);
+		sb.append("] := ");
+		assigned.prettyPrint(sb);
 	}
 
 }

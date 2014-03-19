@@ -31,7 +31,6 @@ public class SensorMem extends Expression{
 	}
 	
 	public void prettyPrint(StringBuffer sb){
-		System.out.println(sb.toString());
 		Token tool = new Token(o.value, 0);
 		sb.append(tool.toString());
 		sb.append("[");
