@@ -58,6 +58,11 @@ public class Num extends Expression {		//WHY IS THIS ABSTRACT?
 			return randomReplace();
 		}
 	}
+	
+	public Expression deepCopy() {
+		Expression newExp = new Num(value);
+		return newExp;
+	}
     
     public void prettyPrint(StringBuffer sb){
     	sb.append(Integer.toString(value));

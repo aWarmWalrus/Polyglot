@@ -115,6 +115,14 @@ public class BinaryCondition extends AbstractNode implements Condition {
 			return newParent();
 		
 	}
+	
+	
+	@Override
+	public Condition deepCopy() {
+		Condition newCondition = new BinaryCondition(left.deepCopy(), this.op, right.deepCopy());
+		return newCondition;
+	}
+
 
 	@Override
 	public void prettyPrint(StringBuffer sb) {

@@ -45,16 +45,13 @@ public class Program extends AbstractNode {
 	//when we call mutate, then we will return a mutated Program
 	//this works because Program extends Node
 
-//	@Override
-//	public Node mutate() {
-//		if (critter == null) {
-//			critter = new Critter(this); 
-//			//making a new Critter 
-//		}
-//		Mutation mutt = new Mutation(this);
-//		return mutt.makeMutation();
-//		
-//	}
+	@Override
+	public Node mutate() {
+		for (int i = 0; i < rules.size(); i++) {
+			rules.get(i).mutate();
+		}
+		return this;
+	}
 	
 	@Override
 	public Node remove() {
@@ -122,6 +119,16 @@ public class Program extends AbstractNode {
 		}
 	}
 
+	@Override
+	public Node deepCopy() {
+		ArrayList<Rule> newRuleList = new ArrayList<Rule>();
+		for (int i = 0; i < rules.size(); i++) {
+			newRuleList.add((Rule) rules.get(i).deepCopy());
+		}
+		rules = newRuleList;
+		return this; //returns the Program, now with a new copy of Rules
+	}
+	
 	@Override
 	public void prettyPrint(StringBuffer sb) {
 		for(Rule i : rules) i.prettyPrint(sb);

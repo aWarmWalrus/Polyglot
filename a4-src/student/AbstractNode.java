@@ -20,8 +20,7 @@ public class AbstractNode implements Node {
 	// this should never actually be called
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 	
 	
@@ -32,10 +31,12 @@ public class AbstractNode implements Node {
 	
 	@Override
 	public Node mutate() {
-		stackOfNodes.add(this); //add the Node to the Linked List
-		Mutation mutt = new Mutation(this);
-		return mutt.makeMutation();
+//		stackOfNodes.add(this); //add the Node to the Linked List
+//		Mutation mutt = new Mutation(this);
+//		return mutt.makeMutation();
+		return null;
 	}
+	
 
 	/**
 	 * Removes the node.
@@ -84,12 +85,12 @@ public class AbstractNode implements Node {
 
 	
 	/**
-	 * Makes a deep copy of the Node.
+	 * Returns a separate and identical copy of the Node
+	 * @return a new copy of the Node
 	 * 
 	 */
-	protected Node deepCopy() {
+	public Node deepCopy() {
 		return null;
-		//TODO This should act recursively
 	}
 	
 	// public Node mutateHelper() {

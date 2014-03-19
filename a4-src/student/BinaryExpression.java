@@ -2,7 +2,7 @@ package student;
 
 /**
  * 
- * 
+ * @author Kelly
  * @author aWarmWalrus
  *
  */
@@ -32,6 +32,17 @@ public class BinaryExpression extends Expression implements Node {
 	BinaryOp op;
 	Expression right;
 	
+	public BinaryExpression() {
+		//can set attributes later, allows for flexibility
+	}
+	
+	
+	public BinaryExpression(Expression left, BinaryOp op, Expression right) {
+		this.left = left;
+		this.op = op;
+		this.right = right;
+	}
+	
 	public void setLeft(Expression l){
 		left = l;
 	}
@@ -56,6 +67,11 @@ public class BinaryExpression extends Expression implements Node {
 		return null;
 	}
 
+	public Expression deepCopy() {
+		Expression newExp = new BinaryExpression(left.deepCopy(), op, right.deepCopy());
+		return newExp;
+	}
+	
 	@Override
 	public void prettyPrint(StringBuffer sb) {
 		left.prettyPrint(sb);

@@ -8,6 +8,34 @@ public class Relation extends AbstractNode implements Condition{
 	public Condition condition;
 	public boolean isCondition = false;
 	
+	/**
+	 * Constructs a new Relation object
+	 */
+	public Relation() {
+		//allows you to set class variables later if wanted
+	}
+	
+	
+	/**
+	 * Constructs a new Relation object
+	 * @param left
+	 * @param rel
+	 * @param right
+	 */
+	public Relation(Expression left, RelOperator rel, Expression right) {
+		this.left = left;
+		this.rel = rel;
+		this.right = right;
+	}
+	
+	/**
+	 * Constructs a new Relation object
+	 * @param condition
+	 */
+	public Relation(Condition condition) {
+		this.condition = condition;
+	}
+	
 
 	public void setCondition(Condition cond) throws SyntaxError {
 		
@@ -105,7 +133,19 @@ public class Relation extends AbstractNode implements Condition{
 	}
 	
 	
-	
+	@Override
+	public Condition deepCopy() {
+		Condition newCondition;
+		Condition newCondition2;
+		if (isCondition) {
+			newCondition =  new Relation(condition.deepCopy());
+			return newCondition;
+		} else {
+			newCondition2 = new Relation((Expression)left.deepCopy(),
+					rel, (Expression)right.deepCopy());
+			return newCondition2;
+		}
+	}
 	
 	@Override
 	public void prettyPrint(StringBuffer sb) {

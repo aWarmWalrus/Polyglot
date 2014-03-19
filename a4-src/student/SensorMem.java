@@ -19,6 +19,16 @@ public class SensorMem extends Expression{
 		}
 	}
 	
+	public SensorMem() {
+		//can set attributes later
+	}
+	
+	
+	public SensorMem(Expression index, option o) {
+		this.index = index;
+		this.o = o;
+	}
+	
 	Expression index;
 	option o;
 	
@@ -28,6 +38,12 @@ public class SensorMem extends Expression{
 	
 	void setExpression(Expression expr){
 		index = expr;
+	}
+	
+	@Override
+	public Expression deepCopy() {
+		Expression newExp = new SensorMem(index.deepCopy(), this.o);
+		return newExp;		
 	}
 	
 	public void prettyPrint(StringBuffer sb){

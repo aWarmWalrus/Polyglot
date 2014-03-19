@@ -1,7 +1,6 @@
 package student;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 /**
  * A representation of a critter rule.
@@ -22,14 +21,16 @@ public class Rule extends AbstractNode {
     }
     
     
-//    /**
-//     * Constructor for a Rule Object
-//     * @param cond
-//     */
-//    public Rule(Condition condition, ArrayList<Update> updateList) {
-//    	this.condition = condition; //another way to set the Condition
-//    	updates = updateList;
-//    }
+    /**
+     * Alternate constructor for a Rule Object
+     * @param cond
+     */
+    public Rule(Condition condition, ArrayList<Update> updateList, Action action) {
+    	this.condition = condition; //another way to set the Condition
+    	updates = updateList;
+    	this.action = action;
+    	actionSwitch = new ActionSwitch(action);
+    }
     
     public void setCondition(Condition cond){
     	condition = cond;
@@ -72,11 +73,11 @@ public class Rule extends AbstractNode {
 		return accumulator;
 	}
 
-//	@Override
-//	public Node mutate() {
-//		Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public Node mutate() {
+		//TODO
+		return null;
+	}
 	
 	@Override
 	public Node remove() {
@@ -127,6 +128,16 @@ public class Rule extends AbstractNode {
 		} else {
 			return cloneSubtree();
 		}
+	}
+	
+	@Override
+	public Node deepCopy() {
+		ArrayList<Update> newUpdates = new ArrayList<Update>();
+		for (int i = 0; i < updates.size(); i++) {
+			newUpdates.add((Update) updates.get(i).deepCopy());
+		}
+		Rule newRule = new Rule(condition.deepCopy(), newUpdates, action);
+		return newRule;
 	}
 	
 	@Override

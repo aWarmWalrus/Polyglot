@@ -4,11 +4,12 @@ import student.AbstractNode;
 import student.Action;
 import student.ActionSwitch;
 import student.Node;
+import student.Program;
 
 public class RuleMutation extends Mutation {
 
-	public RuleMutation(Critter crit, Node node) {
-		super(crit, node);
+	public RuleMutation(Critter crit, Program program) {
+		super(crit, program);
 		// TODO Auto-generated constructor stub
 	}
 	

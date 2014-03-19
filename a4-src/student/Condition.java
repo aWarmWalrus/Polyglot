@@ -14,4 +14,12 @@ public interface Condition extends Node {
 	 * @return true or false
 	 */
 	public boolean evaluate();
+	
+	/**
+	 * Copies the Condition (to a new Object)
+	 * 
+	 * @return a new Condition
+	 */
+	public Condition deepCopy();
+
 }

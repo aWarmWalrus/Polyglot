@@ -2,11 +2,21 @@ package student;
 
 public class Update extends AbstractNode{
 	
-	Expression memIndex;
+	SensorMem mem;
 	Expression assigned;
 	
+	public Update(SensorMem mem, Expression assigned) {
+		this.mem = mem;
+		this.assigned = assigned;
+	}
+	
+	public Update(){
+		mem = new SensorMem();
+		mem.setOption(Token.MEM);
+	}
+	
 	public void setMemIndex(Expression expr){
-		memIndex = expr;
+		mem.setExpression(expr);
 	}
 	
 	public void setAssignment(Expression expr){
@@ -80,9 +90,15 @@ public class Update extends AbstractNode{
 	}
 
 	@Override
+	public Node deepCopy() {
+		Update newUpdate = new Update((SensorMem) mem.deepCopy(), assigned.deepCopy());
+		return newUpdate;
+	}
+	
+	@Override
 	public void prettyPrint(StringBuffer sb) {
 		sb.append("mem[");
-		memIndex.prettyPrint(sb);
+		mem.index.prettyPrint(sb);
 		sb.append("] := ");
 		assigned.prettyPrint(sb);
 	}
