@@ -17,6 +17,8 @@ public class Critter {
 	public Critter(Program p) {
 		program = p; // each Critter needs a program
 		program.critter = this;
+		mem = new ArrayList<Integer>();
+		r = new Random();
 		mem.add(0, 8); // assuming we start with 8
 		mem.add(1, 1);
 		mem.add(2, 1);

@@ -34,6 +34,7 @@ public class Relation extends AbstractNode implements Condition{
 	 */
 	public Relation(Condition condition) {
 		this.condition = condition;
+		isCondition = true;
 	}
 	
 
@@ -54,6 +55,7 @@ public class Relation extends AbstractNode implements Condition{
 	}
 	
 	public void setRight(Expression r) throws SyntaxError {
+		if(left == null || rel == null) throw new SyntaxError("SYNTAX ERROR: not a complete condition");
 		if(!isCondition){
 			right = r;
 		}

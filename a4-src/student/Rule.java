@@ -45,10 +45,12 @@ public class Rule extends AbstractNode {
 	public void addUpdates(ArrayList<Update> updates) {
 		this.updates = updates;
 	}
-	
+
 	public boolean isAction() {
-		if (action.actionValue != 0) return true;
-		else return false;
+		if (action.actionValue != 0)
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -65,6 +67,33 @@ public class Rule extends AbstractNode {
 			return true;
 	}
 
+	/**
+	 * Gets the condition if there is one.
+	 * 
+	 * @return condition if it exists
+	 */
+	public Condition getCondition() {
+		return condition;
+	}
+
+	/**
+	 * Gets the action.
+	 * 
+	 * @return action if it exists
+	 */
+	public Action getAction() {
+		return action;
+	}
+
+	/**
+	 * Gets the updates
+	 * 
+	 * @return updates
+	 */
+	public ArrayList<Update> getUpdates() {
+		return updates;
+	}
+
 	@Override
 	public int size() {
 		// this iterates through the ArrayList of Update objects, calling size
@@ -77,7 +106,8 @@ public class Rule extends AbstractNode {
 		if (isAction()) { // if it is not a NONE type
 			numUpdatesActions += 1; // we add the action to the count
 		}
-		return numUpdatesActions + 1; // include the Rule in the size
+		return condition.size() + numUpdatesActions + 1; // include the Rule in
+															// the size
 	}
 
 	@Override
@@ -92,20 +122,21 @@ public class Rule extends AbstractNode {
 			// we add the Rule to the LinkedList to keep track of it
 
 			thatNode = thatNode - 1;
-			if (isAction()) thatNode = thatNode - 1; //we discount the Action
-			//we are excluding a possible Action from this probability
-			
+			if (isAction())
+				thatNode = thatNode - 1; // we discount the Action
+			// we are excluding a possible Action from this probability
+
 			for (int i = 0; i < updates.size(); i++) {
-				if (updates.get(i).size() < thatNode){
+				if (updates.get(i).size() < thatNode) {
 					thatNode = thatNode - updates.get(i).size();
-					//narrowing down our probability
+					// narrowing down our probability
 				} else { // if rules.get(i).size(0 >= thatNode
 					updates.get(i).mutate();
 					return this;
-					//we found the Rule that gets that mutation
+					// we found the Rule that gets that mutation
 				}
 			}
-			
+
 		}
 		return this;
 	}
@@ -129,18 +160,18 @@ public class Rule extends AbstractNode {
 	public Node cloneSubtree() {
 		Program p = (Program) stackOfNodes.getFirst();
 		int randRuleIndex = rand.nextInt(p.rules.size());
-		int originalIndex = p.rules.indexOf(this); //index of the current Rule
-		Rule copiedRule = (Rule)p.rules.get(randRuleIndex).deepCopy();
+		int originalIndex = p.rules.indexOf(this); // index of the current Rule
+		Rule copiedRule = (Rule) p.rules.get(randRuleIndex).deepCopy();
 		p.rules.add(originalIndex, copiedRule);
 		return copiedRule;
 	}
 
 	@Override
 	public Node randomReplace() {
-		//because we can't randomlyReplace the Node instead we will
-		//randomly replace the Action
-		//we will make sure there is at least one Action or one Update left
-		action = action.randomchoice(); //changes action
+		// because we can't randomlyReplace the Node instead we will
+		// randomly replace the Action
+		// we will make sure there is at least one Action or one Update left
+		action = action.randomchoice(); // changes action
 		while (!isAction() && updates.size() == 0) {
 			action = action.randomchoice();
 		}
@@ -168,9 +199,12 @@ public class Rule extends AbstractNode {
 	 */
 	private Node invalidMutationHandler() {
 		int randMutation = rand.nextInt(3);
-		if (randMutation == 0) return remove();
-		else if (randMutation == 1) return cloneSubtree();
-		else return randomReplace();
+		if (randMutation == 0)
+			return remove();
+		else if (randMutation == 1)
+			return cloneSubtree();
+		else
+			return randomReplace();
 	}
 
 	@Override
