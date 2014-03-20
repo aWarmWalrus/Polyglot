@@ -25,34 +25,34 @@ public class RuleSetMutation extends Mutation {
 	 * 
 	 * @return a Node
 	 */
-	public Node ruleMutation() {
+	public Node ruleMutation(StringBuffer sb) {
 
 		int mutationType = rand.nextInt(5);
 		if (mutationType == 0) {
-			((AbstractNode)nodeToMutate).remove();
+			((AbstractNode)nodeToMutate).remove(sb);
 			//justify this design decision
 		}
 		else if (mutationType == 1) {
-			((AbstractNode)nodeToMutate).swapOrder();
+			((AbstractNode)nodeToMutate).swapOrder(sb);
 		}
 		else if (mutationType == 2) {
-			((AbstractNode)nodeToMutate).cloneSubtree();
+			((AbstractNode)nodeToMutate).cloneSubtree(sb);
 		}
 		else if (mutationType == 3) {
-			((AbstractNode)nodeToMutate).randomReplace();
+			((AbstractNode)nodeToMutate).randomReplace(sb);
 		}
 		else if (mutationType == 4) {
-			((AbstractNode)nodeToMutate).newParent();
+			((AbstractNode)nodeToMutate).newParent(sb);
 		}
 		else  { //(mutationType == 5)
-			((AbstractNode)nodeToMutate).cloneKid();
+			((AbstractNode)nodeToMutate).cloneKid(sb);
 		}
 
 //		nodeToMutate.mutate();
 
 		// after the mutation there is another 1/4 chance that another
 		// mutation will happen
-		return makeMutation();
+		return makeMutation(sb);
 	}
 	
 //	//When the Condition is true, then this action may be triggered.

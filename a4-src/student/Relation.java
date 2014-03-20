@@ -85,18 +85,18 @@ public class Relation extends AbstractNode implements Condition{
 	}
 
 	@Override
-	public Node mutate() {
+	public Node mutate(StringBuffer sb) {
 		int thatNode = rand.nextInt(this.size());
 		if (thatNode == 0) {
 			RuleSetMutation rm = new RuleSetMutation(this);
 			// the RuleSetMutation class takes care of probability
-			return rm.ruleMutation(); // calls mutation on the R
+			return rm.ruleMutation(sb); // calls mutation on the R
 		} else if (thatNode >= 1 && thatNode < left.size() + 1){
 			stackOfNodes.add(this);
-			left.mutate();
+			left.mutate(sb);
 		} else if (thatNode >= left.size() + 1 && thatNode < size()) {
 			stackOfNodes.add(this);
-			right.mutate();
+			right.mutate(sb);
 		} else {
 			System.out.println("This should not be reached");
 		}
@@ -104,7 +104,7 @@ public class Relation extends AbstractNode implements Condition{
 	}
 
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		Node n = stackOfNodes.getLast(); //the parent
 		if (n instanceof Rule) {
 			if (rand.nextInt(1) == 0)
@@ -128,11 +128,16 @@ public class Relation extends AbstractNode implements Condition{
 			((Relation) n).left = this.left;
 			((Relation) n).right = this.right;
 		}
-		return null;
-	} 
+		else { 
+			System.out.println("shouldn't ever happen");
+			return null; 
+		}
+		return this; 
+	}
+
 	
 	@Override
-	public Node swapOrder() {
+	public Node swapOrder(StringBuffer sb) {
 		if (!isCondition) {
 			Expression temp = new BinaryExpression();
 			temp = this.left;
@@ -144,7 +149,7 @@ public class Relation extends AbstractNode implements Condition{
 	}
 	
 	@Override
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
 		Program p = (Program) stackOfNodes.getFirst(); //should be a program
 		ArrayList<Condition> conditionList = new ArrayList<Condition>();
 		for (int i = 0; i < p.rules.size(); i++) {
@@ -175,14 +180,14 @@ public class Relation extends AbstractNode implements Condition{
 	}
 	
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		int randrel = rand.nextInt(6);
 		rel = RelOperator.getRel(randrel + 32);
 		return this;
 	}
 	
 	@Override
-	public Node newParent() {
+	public Node newParent(StringBuffer sb) {
 		//inserts a new BinaryCondition as a parent
 				//just as a convention we have decided to insert make the current
 				//BinaryCondition the left child of the new parent as we see 
@@ -224,12 +229,13 @@ public class Relation extends AbstractNode implements Condition{
 					((Relation) parent).condition = newParent;
 				}
 				return null;
-				// TODO
 	}
+				
+	
 	
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler(); 
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Relation does not have a variable amount of Children
 	}
 	
@@ -238,16 +244,16 @@ public class Relation extends AbstractNode implements Condition{
 	 * then this is called
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(4);
 		if (randMutation == 0)
-			return remove();
+			return remove(sb);
 		else if (randMutation == 1) 
-			return swapOrder();
+			return swapOrder(sb);
 		else if (randMutation == 2) 
-			return cloneSubtree();
+			return cloneSubtree(sb);
 		else 
-			return newParent();
+			return newParent(sb);
 	}
 	
 	

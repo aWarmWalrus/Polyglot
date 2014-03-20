@@ -37,7 +37,7 @@ public class ParserImpl implements Parser {
 			parseProgram(allTokens);
 			//for(Rule rule : program.rules) parseRule(rule);
 		} catch (SyntaxError e) {
-			e.printStackTrace();
+			//System.out.println("SYNTAX ERROR");
 		}
 		return program;
 	}
@@ -63,10 +63,12 @@ public class ParserImpl implements Parser {
 				//System.out.println("+The Rule: " + ruleTokens.toString());
 				Rule thisRule = parseRule(ruleTokens);
 				if(thisRule.getCondition() == null) 
-					throw new SyntaxError("SYNTAX ERROR: Missing a condition");
+
+					throw new SyntaxError("SYNTAX ERROR: Missing a condition. \nError found at line number : " + i.lineNo);
 				if(thisRule.getUpdates() == null &&
 						thisRule.getAction() == null) 
-					throw new SyntaxError("SYNTAX ERROR: Missing an update or rule");
+					throw new SyntaxError("SYNTAX ERROR: Missing an update or rule\nError found at line number : " + i.lineNo);
+
 				program.rules.add(thisRule);
 				ruleTokens.clear();
 			}
@@ -91,7 +93,7 @@ public class ParserImpl implements Parser {
 				bucket.add(i);
 			} else if (i.getType() == Token.ARR){
 				arrows++;
-				if (arrows == 2) throw new SyntaxError("");
+				if (arrows == 2) throw new SyntaxError("SYNTAX ERROR\nError found at line number : " + i.lineNo);
 				//System.out.println("    -The Condition: " + bucket.toString());
 				thisRule.setCondition(parseCondition(bucket));
 				bucket.clear();
@@ -217,8 +219,10 @@ public class ParserImpl implements Parser {
 			
 			else if (status == 1) {
 				if (i.getType() != Token.LBRACKET)
-					throw new SyntaxError("");
+
+					throw new SyntaxError("SYNTAX ERROR\nError found at line number : " + i.lineNo);
 				status = -1;
+
 				continue;
 			} 
 			
@@ -243,7 +247,7 @@ public class ParserImpl implements Parser {
 			//Just checking syntax. If there's no assign, then everything we know is wrong
 			else if (status == 3) {
 				if (i.getType() != Token.ASSIGN)
-					throw new SyntaxError("Missing an := token");
+					throw new SyntaxError("Missing an := token\nError found at line number : " + i.lineNo);
 				status = 4;
 				continue;
 			}
@@ -256,7 +260,7 @@ public class ParserImpl implements Parser {
 				if (i.isAction()){
 					//the current token is an action
 					//System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
-					if(expr.isEmpty()) throw new SyntaxError("Missing arguments");
+					if(expr.isEmpty()) throw new SyntaxError("Missing arguments\nError found at line number : " + i.lineNo);
 					thisUpdate.setAssignment(parseExpression(expr));
 				} else if (i.getType() == Token.MEM
 						|| i.isSensor()){
@@ -269,7 +273,9 @@ public class ParserImpl implements Parser {
 					continue;
 				} else if (i.isAddOp() || i.isMulOp()) //two ops in a row 
 					throw new SyntaxError("You have two operators in a row " +
-							"or an operator directly behind an assign token");
+
+							"or an operator directly behind an assign token\nError found at line number : " + i.lineNo);
+
 				else if (i.getType() == Token.LPAREN){
 					expr.add(i);
 					status += 10;
@@ -377,7 +383,7 @@ public class ParserImpl implements Parser {
 							//assume "[" right after mem token
 							int lbracket = tokens.get(thisToken + 1).getType(); 
 							if(Token.LBRACKET != lbracket) 
-								throw new SyntaxError("");
+								throw new SyntaxError("SYNTAX ERROR\nError found at line number : " + i.lineNo);
 							ArrayList<Token> expr = new ArrayList<Token>();
 							for(Token k : findExpr){
 								if(k.getType() == Token.RBRACKET){
@@ -557,7 +563,7 @@ public class ParserImpl implements Parser {
 			
 			else if(status == 3){
 				if (!i.isMulOp() && !i.isAddOp()){
-					throw new SyntaxError("yo expected a operator here bro");
+					throw new SyntaxError("yo expected a operator here bro\nError found at line number : " + i.lineNo);
 				}
 				//System.out.println("                 @Op: " + i.toString());
 				expression.setOp(i.getType());
@@ -575,7 +581,7 @@ public class ParserImpl implements Parser {
 			else if(status == 10){
 				if(i.getType() != Token.LBRACKET)
 					throw new SyntaxError("Expect a bracket expression" + 
-							"after a sensor or mem");
+							"after a sensor or mem\nError found at line number : " + i.lineNo);
 				status = 11;
 				bucket.add(i);
 				continue;

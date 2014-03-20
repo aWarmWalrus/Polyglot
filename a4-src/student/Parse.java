@@ -32,10 +32,8 @@ public class Parse {
 				Program whatt = godaddy.parse(reader);
 				StringBuffer sb = new StringBuffer();
 				for(int i = 0; i < n; i++)
-					whatt.mutate();
-				sb.append(whatt.mutdescription);
-				RuleSetMutation r = new RuleSetMutation(whatt);
-				r.ruleMutation();
+					whatt.mutate(sb);
+//				sb.append(whatt.mutdescription);
 				whatt.prettyPrint(sb);
 				sugarMomma(sb);
 				whiteSpaceMaster(sb);
@@ -78,6 +76,7 @@ public class Parse {
 					"Prettily print the parse tree generated from the provided program\n" +
 					"\n" +
 					"  -m, --mutate n   Print out a copy of the program mutated n times.");
+			e.printStackTrace();
 		}catch(SyntaxError e){
 			System.out.println("SYNTAX ERROR\n\n" +
 					"Usage: parse.jar [--mutate n] [FILE]\n" +

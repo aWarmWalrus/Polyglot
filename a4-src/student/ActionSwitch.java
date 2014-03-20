@@ -45,38 +45,38 @@ public class ActionSwitch extends AbstractNode {
 		
 	}
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		return null;
 		//TODO
 	}
 	
 	@Override
-	public Node swapOrder() {
-		return invalidMutationHandler(); 
+	public Node swapOrder(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// can't swap Actions - there is at most one Action
 	}
 	
 	@Override
-	public Node cloneSubtree() {
-		return invalidMutationHandler() ;
+	public Node cloneSubtree(StringBuffer sb) {
+		return invalidMutationHandler(sb) ;
 		// we don't have Subtrees after Actions
 	}
 	
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		return null;
 		//TODO
 	}
 	
 	@Override
-	public Node newParent() {
-		return invalidMutationHandler(); 
+	public Node newParent(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// can't insert a new Rule between a Rule and an Action
 	}
 	
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler(); 
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Actions don't have kids
 	}
 	
@@ -85,12 +85,12 @@ public class ActionSwitch extends AbstractNode {
 	 * then this is called
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(2);
 		if (randMutation == 0) {
-			return remove();
+			return remove(sb);
 		} else {
-			return randomReplace();
+			return randomReplace(sb);
 		}
 	}
 	
