@@ -26,7 +26,7 @@ public class ParserImpl implements Parser {
 	 * @return program 
 	 * 
 	 */
-	public Program parse(Reader r) {
+	public Program parse(Reader r) throws SyntaxError{
 		//System.out.println("called parse(), calling parseProgram()");
 		reader = r;
 		tokenizer = new Tokenizer(reader);
@@ -61,7 +61,13 @@ public class ParserImpl implements Parser {
 			} else {
 				//System.out.println();
 				//System.out.println("+The Rule: " + ruleTokens.toString());
-				program.rules.add(parseRule(ruleTokens));
+				Rule thisRule = parseRule(ruleTokens);
+				if(thisRule.getCondition() == null) 
+					throw new SyntaxError("SYNTAX ERROR: Missing a condition");
+				if(thisRule.getUpdates() == null &&
+						thisRule.getAction() == null) 
+					throw new SyntaxError("SYNTAX ERROR: Missing an update or rule");
+				program.rules.add(thisRule);
 				ruleTokens.clear();
 			}
 		}
@@ -129,7 +135,8 @@ public class ParserImpl implements Parser {
 				if(i.getType() == Token.LBRACE){
 					//this should only happen at beginning or right after an op
 					status = -1;
-					if(containsToken(tokens, Token.OR)) bucket.add(i);
+					bucket.add(i);
+					//if(containsToken(tokens, Token.OR)) bucket.add(i);
 					continue;
 				} else if (i.getType() == Token.OR){
 					//System.out.println("       >Left: " + bucket.toString());
@@ -161,8 +168,9 @@ public class ParserImpl implements Parser {
 				}
 				else if(i.getType() == Token.RBRACE){
 					status++;
-					if(status != 0) bucket.add(i);
-					if(containsToken(tokens, Token.OR)) bucket.add(i);
+					bucket.add(i);
+//					if(status != 0) bucket.add(i);
+//					if(containsToken(tokens, Token.OR)) bucket.add(i);
 					continue;
 				}
 				bucket.add(i);
@@ -210,22 +218,27 @@ public class ParserImpl implements Parser {
 			else if (status == 1) {
 				if (i.getType() != Token.LBRACKET)
 					throw new SyntaxError("");
-				status = 2;
+				status = -1;
 				continue;
 			} 
 			
 			//ensnare the expression inside the brackets
-			else if (status == 2) {
-				if (i.getType() != Token.RBRACKET)
-					expr.add(i);
-				else{
+			else if (status < 0) {
+				if(i.getType() == Token.LBRACKET){
+					status--;
+				}
+				else if (i.getType() == Token.RBRACKET)
+					status++;
+					
+				if(status == 0){
 					//System.out.println("        >Update Left: mem" + expr.toString());
 					thisUpdate.setMemIndex(parseExpression(expr));
 					expr.clear();
 					status = 3;
 					continue;
 				}
-			} 
+				expr.add(i);
+			}
 			
 			//Just checking syntax. If there's no assign, then everything we know is wrong
 			else if (status == 3) {
@@ -257,16 +270,34 @@ public class ParserImpl implements Parser {
 				} else if (i.isAddOp() || i.isMulOp()) //two ops in a row 
 					throw new SyntaxError("You have two operators in a row " +
 							"or an operator directly behind an assign token");
+				else if (i.getType() == Token.LPAREN){
+					expr.add(i);
+					status += 10;
+					continue;
+				}
 				else{
-					//System.out.println("THIS CASE NEVER REALLY HAPPENS RIGHT?");
+					//System.out.println("XTHIS CASE NEVER REALLY HAPPENS RIGHT?");
 					expr.add(i);
 				}
 			}
 			
 			//Jump to the end of the mem or sensor bracket
-			else if (status == 5) {
+			else if (status % 10 == 5) {
 				expr.add(i);
-				if(i.getType() == Token.RBRACKET){
+				if(i.getType() == Token.LBRACKET) status += 10;
+				if(i.getType() == Token.RBRACKET) status -= 10;
+				if(status == 5){
+					status = 7;
+					continue;
+				}
+			}
+			
+			//jump to the end of the parenthetical statement
+			else if (status % 10 == 4){
+				expr.add(i);
+				if(i.getType() == Token.LPAREN) status += 10;
+				if(i.getType() == Token.RPAREN) status -= 10;
+				if(status == 4){
 					status = 7;
 					continue;
 				}
@@ -392,7 +423,7 @@ public class ParserImpl implements Parser {
 				if (i.getType() == Token.LBRACE){
 					//this is to cover the case when the entire condition is inside braces
 					//assumes that the last token is a right brace.
-					status = 1;
+					status++;
 					continue;
 				}
 				if (i.isComp()){ 		//there is a possibility of there being two equality signs here. syntax error here!
@@ -406,8 +437,10 @@ public class ParserImpl implements Parser {
 				bucket.add(i);
 			}
 			
-			else if(status == 1){
-				if(i.getType() == Token.RBRACE){
+			else if(status > 0){
+				if(i.getType() == Token.LBRACE) status++;
+				if(i.getType() == Token.RBRACE) status--;
+				if(status == 0){
 					//System.out.println("  :o         ~A Nested Condition!: " + bucket.toString());
 					relation.setCondition(parseCondition(bucket));
 					return relation;
@@ -588,36 +621,12 @@ public class ParserImpl implements Parser {
 		}
 	}
 
-	public Expression parseTerm() throws SyntaxError {
-		return null;
-	}
-
-	
-	public Expression parseFactor(ArrayList<Token> tokens) throws SyntaxError {
-		
-		
-		return null;
-	}
-
-	public Expression parseAtom() throws SyntaxError {
-		throw new UnsupportedOperationException();
-	}
-
 	// add more as necessary...
 	
 	//When the Condition is true, then this action may be triggered.
 	public void triggerAction(Action act){
 		ActionSwitch aswitch = new ActionSwitch(act);
 		aswitch.takingAction();
-	}
-
-	/**
-	 * Consumes a token of the expected type. Throws a SyntaxError if the wrong
-	 * kind of token is encountered.
-	 */
-	public void consume(int curTok, int tokenType) throws SyntaxError {
-		//TODO Charlie I think we're supposed to implement this? maybe?
-		throw new UnsupportedOperationException();
 	}
 	
 	/*

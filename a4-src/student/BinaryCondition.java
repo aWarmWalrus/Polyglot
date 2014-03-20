@@ -163,7 +163,6 @@ public class BinaryCondition extends AbstractNode implements Condition {
 		//little to no benefit in randomizing whether it becomes the left
 		//vs the right child.
 		
-		Condition otherchild = new BinaryCondition();
 		Program p = (Program) stackOfNodes.getFirst(); //should be a program
 		ArrayList<Condition> conditionList = new ArrayList<Condition>();
 		for (int i = 0; i < p.rules.size(); i++) {
@@ -178,7 +177,7 @@ public class BinaryCondition extends AbstractNode implements Condition {
 		
 		//link it back to the tree
 		Node parent = stackOfNodes.getLast();
-		if (parent instanceof BinaryCondition) {
+		if (parent instanceof Rule) {
 			((Rule) parent).condition = newParent;
 		}
 		else if (parent instanceof BinaryCondition) {

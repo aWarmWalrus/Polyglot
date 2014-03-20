@@ -1,5 +1,7 @@
 package student;
 
+import mutations.RuleSetMutation;
+
 public class Update extends AbstractNode{
 	
 	SensorMem mem;
@@ -38,8 +40,33 @@ public class Update extends AbstractNode{
 
 	@Override
 	public Node mutate() {
-		// TODO Auto-generated method stub
-		return null;
+		int thatNode = rand.nextInt(this.size());
+		if (thatNode == 0) {
+			RuleSetMutation rm = new RuleSetMutation(this);
+			
+			return rm.ruleMutation();
+		} else if (thatNode >= 1 && thatNode < assigned.size() + 1) {
+			assigned.mutate();
+			//weight of probability depends on size of expression
+		} else {
+			stackOfNodes.add(this);
+			// we add the Update to the LinkedList to keep track of it
+
+			thatNode = thatNode - 2; //we discount the 
+
+			for (int i = 0; i < updates.size(); i++) {
+				if (updates.get(i).size() < thatNode) {
+					thatNode = thatNode - updates.get(i).size();
+					// narrowing down our probability
+				} else { // if rules.get(i).size(0 >= thatNode
+					updates.get(i).mutate();
+					return this;
+					// we found the Rule that gets that mutation
+				}
+			}
+
+		}
+		return this;
 	}
 	
 	@Override

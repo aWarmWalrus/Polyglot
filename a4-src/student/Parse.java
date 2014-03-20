@@ -23,11 +23,11 @@ public class Parse {
 	public static void main(String[] args){
 
 		try{
-			if(args[0].equals("--mutate") || args[0].equals("-m")){
+			if(true){//args[0].equals("--mutate") || args[0].equals("-m")){
 				
-				int n = Integer.valueOf(args[1]);
+				int n = 1;//Integer.valueOf(args[1]);
 				
-				BufferedReader reader = new BufferedReader(new FileReader(args[2]));
+				BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));
 				Parser godaddy = new ParserImpl();
 				Program whatt = godaddy.parse(reader);
 				StringBuffer sb = new StringBuffer();
@@ -44,7 +44,7 @@ public class Parse {
 			}
 			else{
 				
-				BufferedReader reader = new BufferedReader(new FileReader("I:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));//args[0]));
+				BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Kelly\\Documents\\GitHub\\Polyglot\\a4-src\\student\\example-rules.txt"));//args[0]));
 				Parser godaddy = new ParserImpl();
 				Program whatt = godaddy.parse(reader);
 				StringBuffer sb = new StringBuffer();
