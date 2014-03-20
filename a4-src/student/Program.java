@@ -15,6 +15,7 @@ public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
 	public Critter critter;
+	public StringBuffer mutdescription;
 
 	// Random rand = new Random();
 
@@ -24,6 +25,7 @@ public class Program extends AbstractNode {
 
 	public Program() {
 		rules = new ArrayList<Rule>();
+		mutdescription = new StringBuffer();
 	}
 
 	@Override
@@ -87,6 +89,7 @@ public class Program extends AbstractNode {
 
 	@Override
 	public Node swapOrder() {
+		mutdescription.append("The order of two rules has been switched.");
 		int pos1 = rand.nextInt(rules.size());
 		int offset = rand.nextInt(rules.size() - 1) + 1;
 		int pos2 = (pos1 + offset) % rules.size();
@@ -124,6 +127,7 @@ public class Program extends AbstractNode {
 
 	@Override
 	public Node cloneKid() {
+		mutdescription.append("Mutation: a rule has been cloned.");
 		int kidIndex = rand.nextInt(this.rules.size());
 		Rule kid = this.rules.get(kidIndex);
 		this.rules.add((Rule)kid.deepCopy()); //we copy the kid and add it

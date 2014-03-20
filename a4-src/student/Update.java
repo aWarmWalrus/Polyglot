@@ -15,6 +15,14 @@ public class Update extends AbstractNode{
 		mem.setOption(Token.MEM);
 	}
 	
+	public SensorMem getMem(){
+		return mem;
+	}
+	
+	public Expression getAssignment(){
+		return assigned;
+	}
+	
 	public void setMemIndex(Expression expr){
 		mem.setExpression(expr);
 	}

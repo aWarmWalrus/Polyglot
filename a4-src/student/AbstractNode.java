@@ -10,6 +10,8 @@ import mutations.Mutation;
 
 public class AbstractNode implements Node {
 
+	StringBuffer mutdescription;
+	
 	protected LinkedList<Node> stackOfNodes = new LinkedList<Node>();
 	public Random rand = new Random();
 	
