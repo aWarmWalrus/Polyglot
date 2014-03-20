@@ -30,12 +30,12 @@ public class Parse {
 				BufferedReader reader = new BufferedReader(new FileReader(args[2]));
 				Parser godaddy = new ParserImpl();
 				Program whatt = godaddy.parse(reader);
-				for(int i = 0; i < n; i++){
-					
-				}
+				StringBuffer sb = new StringBuffer();
+				for(int i = 0; i < n; i++)
+					whatt.mutate();
+				sb.append(whatt.mutdescription);
 				RuleSetMutation r = new RuleSetMutation(whatt);
 				r.ruleMutation();
-				StringBuffer sb = new StringBuffer();
 				whatt.prettyPrint(sb);
 				sugarMomma(sb);
 				whiteSpaceMaster(sb);
@@ -44,7 +44,7 @@ public class Parse {
 			}
 			else{
 				
-				BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+				BufferedReader reader = new BufferedReader(new FileReader("I:\\KINGSTON\\CS2112\\Polyglot1\\a4-src\\student\\example-rules.txt"));//args[0]));
 				Parser godaddy = new ParserImpl();
 				Program whatt = godaddy.parse(reader);
 				StringBuffer sb = new StringBuffer();
@@ -139,9 +139,16 @@ public class Parse {
 			if(lnbreak == -1) break;
 			rule = sb.indexOf("-->", lnbreak);
 			if(rule == -1) break;
+			//THIS IS WHEN THE LEFT SIDE IS TOO BIGGGG
 			if(rule - lnbreak >=  45){
 				int newbreak = sb.indexOf("and", lnbreak);
 				if(newbreak == -1) newbreak = sb.indexOf("or", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf(">", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("<", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("<=", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf(">=", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("=", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("!=", lnbreak);
 				else if(newbreak == -1) newbreak = sb.indexOf("+", lnbreak);
 				else if(newbreak == -1) newbreak = sb.indexOf("-", lnbreak);
 				else if(newbreak == -1) newbreak = sb.indexOf("*", lnbreak);
@@ -154,10 +161,27 @@ public class Parse {
 				rule = newbreak;
 				continue;
 			}
+			
+			//THIS IS WHEN THE RIGHT SIDE IS TOO UNAACCEEPTABLBLLLEEEL
+			if(sb.indexOf("\n", rule) - rule >=  45){
+				int newbreak = sb.indexOf(":=", lnbreak);
+				if(newbreak == -1) newbreak = sb.indexOf("+", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("-", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("*", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("/", lnbreak);
+				else if(newbreak == -1) newbreak = sb.indexOf("mod", lnbreak);
+				//it has to be one of these. there is no else statement because
+				//there is no reason for the string to be long if it doesn't
+				//have one of these bastards in them.
+				sb.insert(sb.indexOf(" ", newbreak) + 1, "$ ");
+				rule = sb.indexOf("$", rule);
+				continue;
+			}
 			if(rule - lnbreak > longest){
 				longest = rule - lnbreak;
 			}
 		}
+		
 		int lnbreak = 0;
 		while(true){
 			rule = sb.indexOf("-->", lnbreak);

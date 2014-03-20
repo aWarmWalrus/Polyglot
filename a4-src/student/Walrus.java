@@ -1,7 +1,8 @@
 package student;
 
 public class Walrus {
-	static String kookookachoo = "\n\n\n               __ ___\n" +
+	static String kookookachoo = "\n\n--------$======+======########!!!!@!!!!########======+======$---------" +
+			"\n\n               __ ___\n" +
 "             .'. -- . '.                       THANK YOU FOR PUTTING\n" +
 "            /e)  __   (e|                       UP WITH US AND GRADING\n" +
 "           /.'  ()()   '.\\._                     THIS WALRUS OF AN ASSIGNMENT\n" +

@@ -29,7 +29,7 @@ public class ParserTest {
 	
 	@Before
 	public void beforeTests() throws FileNotFoundException, SyntaxError{
-		reader = new BufferedReader(new FileReader("J:\\KINGSTON\\CS2112\\Polyglot1\\testfile.txt"));
+		reader = new BufferedReader(new FileReader("I:\\KINGSTON\\CS2112\\Polyglot1\\testfile.txt"));
 		t = ParserFactory.getParser();
 		x = t.parse(reader);
 	}
@@ -41,8 +41,22 @@ public class ParserTest {
 	 */
 	@Test
 	public void testParser(){
-		//Program y = t.parse(new BufferedReader(new StringReader("5 --> eat;")));
+
+		//Test the program. see if it made links with all its rules.
 		rules = x.getRules();
+		assertTrue("WHY IS RULES NULL?", rules != null);
+		assertTrue("Links were not made", rules.get(0) != null);	//there are two rules. check to make sure
+		assertTrue("Links were not made", rules.get(1) != null);	//that they were assigned.
+		
+		//Test each rule. see if it complete links with all its updates.
+		for(Rule rule : rules){
+			
+			for(Update update : rule.getUpdates()){
+				assertTrue("WHY IS THE UPDATE NULL?", update != null);
+				assertTrue("Links were not made", update.getMem() != null);	//there are two rules. check to make sure
+				assertTrue("Links were not made", update.getAssignment() != null);	//that they were assigned.
+			}
+		}
 		assertTrue("WHY IS RULES NULL?", rules != null);
 		assertTrue("Links were not made", rules.get(0) != null);	//there are two rules. check to make sure
 		assertTrue("Links were not made", rules.get(1) != null);	//that they were assigned.
