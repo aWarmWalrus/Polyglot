@@ -111,14 +111,14 @@ public class Rule extends AbstractNode {
 	}
 
 	@Override
-	public Node mutate() {
+	public Node mutate(StringBuffer sb) {
 		int thatNode = rand.nextInt(this.size());
 		if (thatNode == 0) {
 			RuleSetMutation rm = new RuleSetMutation(this);
 			// the RuleSetMutation class takes care of probability
-			return rm.ruleMutation(); // calls mutation on the Rule only
+			return rm.ruleMutation(sb); // calls mutation on the Rule only
 		} else if (thatNode >= 1 && thatNode < condition.size() + 1) {
-			condition.mutate();
+			condition.mutate(sb);
 			//weight of probability depends on size of condition
 		} else {
 			stackOfNodes.add(this);
@@ -134,7 +134,7 @@ public class Rule extends AbstractNode {
 					thatNode = thatNode - updates.get(i).size();
 					// narrowing down our probability
 				} else { // if rules.get(i).size(0 >= thatNode
-					updates.get(i).mutate();
+					updates.get(i).mutate(sb);
 					return this;
 					// we found the Rule that gets that mutation
 				}
@@ -145,7 +145,8 @@ public class Rule extends AbstractNode {
 	}
 
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
+		sb.append("Mutation: removed a Rule node");
 		Program p = (Program) stackOfNodes.getFirst(); // should be a Program
 		// we added the Program that called mutate() to this LinkedList
 
@@ -154,13 +155,14 @@ public class Rule extends AbstractNode {
 	}
 
 	@Override
-	public Node swapOrder() {
-		return invalidMutationHandler();
+	public Node swapOrder(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// you can't swap a condition with a command
 	}
 
 	@Override
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
+		sb.append("Mutation: cloned a rule's subtree");
 		Program p = (Program) stackOfNodes.getFirst();
 		int randRuleIndex = rand.nextInt(p.rules.size());
 		int originalIndex = p.rules.indexOf(this); // index of the current Rule
@@ -170,7 +172,7 @@ public class Rule extends AbstractNode {
 	}
 
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		// because we can't randomlyReplace the Node instead we will
 		// randomly replace the Action
 		// we will make sure there is at least one Action or one Update left
@@ -183,14 +185,14 @@ public class Rule extends AbstractNode {
 	}
 
 	@Override
-	public Node newParent() {
-		return invalidMutationHandler();
+	public Node newParent(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// cannot insert a Program as the parent of this rule
 	}
 
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler();
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// Rule does not have a variable amount of Children
 	}
 
@@ -200,14 +202,14 @@ public class Rule extends AbstractNode {
 	 * 
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(3);
 		if (randMutation == 0)
-			return remove();
+			return remove(sb);
 		else if (randMutation == 1)
-			return cloneSubtree();
+			return cloneSubtree(sb);
 		else
-			return randomReplace();
+			return randomReplace(sb);
 	}
 
 	@Override

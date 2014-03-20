@@ -15,7 +15,7 @@ public interface Node {
 	 * Return a version of the same AST with one random mutation in it.
 	 * May have side effects on the original AST.
 	 */
-	Node mutate();
+	Node mutate(StringBuffer sb);
 
 	/**
 	 * Appends the program represented by this node prettily to

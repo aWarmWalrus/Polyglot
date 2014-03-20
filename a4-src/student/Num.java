@@ -16,38 +16,38 @@ public class Num extends Expression {		//WHY IS THIS ABSTRACT?
     
     
     @Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		return null;
 		//TODO
 	} 
 	
 	@Override
-	public Node swapOrder() {
-		return invalidMutationHandler(); 
+	public Node swapOrder(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Num has no children to swap
 	}
 	
 	@Override
-	public Node cloneSubtree() {
-		return invalidMutationHandler();
+	public Node cloneSubtree(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// Num has no children to clone
 	}
 	
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		return null; 
 		// TODO adjust the integer
 	}
 	
 	@Override
-	public Node newParent() {
+	public Node newParent(StringBuffer sb) {
 		return null;
 		// can insert an expression as a parent
 	}
 	
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler(); 
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// has no children
 	}
 	
@@ -56,12 +56,12 @@ public class Num extends Expression {		//WHY IS THIS ABSTRACT?
 	 * then this is called
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(2);
 		if (randMutation == 0) {
-			return remove();
+			return remove(sb);
 		} else {
-			return randomReplace();
+			return randomReplace(sb);
 		}
 	}
 	

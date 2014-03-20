@@ -37,44 +37,44 @@ public class Update extends AbstractNode{
 	}
 
 	@Override
-	public Node mutate() {
+	public Node mutate(StringBuffer sb) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		return null;
 		//TODO
 	} 
 	
 	@Override
-	public Node swapOrder() {
+	public Node swapOrder(StringBuffer sb) {
 		return null;
 		//TODO
 	}
 	
 	@Override
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
 		return null ;
 		// TODO
 	}
 	
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		return null;
 		// TODO
 	}
 	
 	@Override
-	public Node newParent() {
-		return invalidMutationHandler(); 
+	public Node newParent(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// cannot insert a new Rule between a Rule and an Update
 	}
 	
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler(); 
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Update does not have a variable amount of Children
 	}
 	
@@ -83,16 +83,16 @@ public class Update extends AbstractNode{
 	 * then this is called
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(5);
 		if (randMutation == 0)
-			return remove();
+			return remove(sb);
 		else if (randMutation == 1) 
-			return swapOrder();
+			return swapOrder(sb);
 		else if (randMutation == 2) 
-			return cloneSubtree();
+			return cloneSubtree(sb);
 		else 
-			return randomReplace();
+			return randomReplace(sb);
 	}
 
 	@Override

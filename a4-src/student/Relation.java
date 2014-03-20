@@ -87,38 +87,38 @@ public class Relation extends AbstractNode implements Condition{
 //	}
 
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		//TODO 
 		return null;
 	} 
 	
 	@Override
-	public Node swapOrder() {
+	public Node swapOrder(StringBuffer sb) {
 		return null;
 		//TODO
 	}
 	
 	@Override
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
 		return null ;
 		// TODO
 	}
 	
 	@Override
-	public Node randomReplace() {
-		return invalidMutationHandler(); 
+	public Node randomReplace(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Relation cannot be mutated while leaving its children the same
 	}
 	
 	@Override
-	public Node newParent() {
+	public Node newParent(StringBuffer sb) {
 		return null;
 		// TODO
 	}
 	
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler(); 
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb); 
 		// Relation does not have a variable amount of Children
 	}
 	
@@ -127,16 +127,16 @@ public class Relation extends AbstractNode implements Condition{
 	 * then this is called
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(4);
 		if (randMutation == 0)
-			return remove();
+			return remove(sb);
 		else if (randMutation == 1) 
-			return swapOrder();
+			return swapOrder(sb);
 		else if (randMutation == 2) 
-			return cloneSubtree();
+			return cloneSubtree(sb);
 		else 
-			return newParent();
+			return newParent(sb);
 	}
 	
 	

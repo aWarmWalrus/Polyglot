@@ -72,8 +72,8 @@ public class ParserTest {
 		assertTrue("program.size is not working", x.size() == 21);
 		Critter butt = new Critter(x);
 		RuleSetMutation r = new RuleSetMutation(butt, x);
-		r.ruleMutation();
 		StringBuffer sb = new StringBuffer();
+		r.ruleMutation(sb);
 		x.prettyPrint(sb);
 		System.out.println(sb.toString());
 	}

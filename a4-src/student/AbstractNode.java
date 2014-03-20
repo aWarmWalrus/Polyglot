@@ -10,8 +10,6 @@ import mutations.Mutation;
 
 public class AbstractNode implements Node {
 
-	StringBuffer mutdescription;
-	
 	protected LinkedList<Node> stackOfNodes = new LinkedList<Node>();
 	public Random rand = new Random();
 	
@@ -32,7 +30,7 @@ public class AbstractNode implements Node {
 	// then mutate at that position
 	
 	@Override
-	public Node mutate() {
+	public Node mutate(StringBuffer sb) {
 //		stackOfNodes.add(this); //add the Node to the Linked List
 //		Mutation mutt = new Mutation(this);
 //		return mutt.makeMutation();
@@ -44,7 +42,7 @@ public class AbstractNode implements Node {
 	 * Removes the node.
 	 * @return Returns the Parent Node.
 	 */
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
 		return null;
 	}
 
@@ -53,35 +51,35 @@ public class AbstractNode implements Node {
 	 * 
 	 * @return
 	 */
-	public Node swapOrder() {
+	public Node swapOrder(StringBuffer sb) {
 		return null;
 	}
 
 	/**
 	 * Replaces the Node and its children.
 	 */
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
 		return null;
 	}
 
 	/**
 	 * Only the Node is replaced.
 	 */
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
 		return null;
 	}
 
 	/**
 	 * Inserts a new parent for the Node.
 	 */
-	public Node newParent() {
+	public Node newParent(StringBuffer sb) {
 		return null;
 	}
 
 	/**
 	 * Adds a child for the Node.
 	 */
-	public Node cloneKid() {
+	public Node cloneKid(StringBuffer sb) {
 		return null;
 	}
 

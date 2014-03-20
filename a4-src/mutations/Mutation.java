@@ -41,13 +41,13 @@ public class Mutation {
 	 * in the constructor.
 	 * @return A new Program.
 	 */
-	public Node makeMutation() {
+	public Node makeMutation(StringBuffer sb) {
 		// there is 3/4 chance that we will just return the original program
 		
 		if (rand.nextInt(4) != 0) {
 			return noMutation();
 		} else { // if the number == 0
-			return isMutation();
+			return isMutation(sb);
 		}
 	}
 
@@ -58,17 +58,17 @@ public class Mutation {
 	 * 
 	 * @return a Mutated Program
 	 */
-	private Node isMutation() {
+	private Node isMutation(StringBuffer sb) {
 		// helper methods will have 1/4 chance of calling another mutation
 		if (rand.nextInt(2) == 0) {
 			
 			AttributeMutation attr = new AttributeMutation(critter, nodeToMutate);
-			return attr.attributeMutation();
+			return attr.attributeMutation(sb);
 
 		} else { // if the number == 1
 			
 			RuleSetMutation rule = new RuleSetMutation(critter, nodeToMutate);
-			return rule.ruleMutation();
+			return rule.ruleMutation(sb);
 		}
 
 	}

@@ -1,5 +1,6 @@
 package student;
 
+@SuppressWarnings("serial")
 public class SyntaxError extends Exception {
 
 	public SyntaxError() {

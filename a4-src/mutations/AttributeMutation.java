@@ -16,7 +16,7 @@ public class AttributeMutation extends Mutation {
 	 * 
 	 * @return a Program
 	 */
-	public Node attributeMutation() {
+	public Node attributeMutation(StringBuffer sb) {
 		// 3 kinds of memory entries
 		// 1) length of critter's memory (at least 8)
 		// 2) offense (at least 1)
@@ -62,7 +62,7 @@ public class AttributeMutation extends Mutation {
 		}
 		// after the mutation there is another 1/4 chance that another
 		// mutation will happen
-		return makeMutation();
+		return makeMutation(sb);
 
 	}
 	

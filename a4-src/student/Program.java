@@ -15,7 +15,7 @@ public class Program extends AbstractNode {
 
 	ArrayList<Rule> rules;
 	public Critter critter;
-	public StringBuffer mutdescription;
+
 
 	// Random rand = new Random();
 
@@ -25,7 +25,6 @@ public class Program extends AbstractNode {
 
 	public Program() {
 		rules = new ArrayList<Rule>();
-		mutdescription = new StringBuffer();
 	}
 
 	@Override
@@ -51,7 +50,7 @@ public class Program extends AbstractNode {
 	// this works because Program extends Node
 
 	@Override
-	public Node mutate() {
+	public Node mutate(StringBuffer sb) {
 		// probability weights depend on the size
 		// there is a (1/program.size() chance the mutation will happen
 		// on Program, and a (program.size() - 1)/program.size() chance that
@@ -61,7 +60,7 @@ public class Program extends AbstractNode {
 		if (thatNode == 0) {
 			RuleSetMutation rm = new RuleSetMutation(this);
 			//the RuleSetMutation class takes care of probability
-			return rm.ruleMutation(); // calls mutation on the Program only
+			return rm.ruleMutation(sb); // calls mutation on the Program only
 		} else {
 			stackOfNodes.add(this); 
 			//we add the Program to the LinkedList to keep track of it
@@ -72,7 +71,7 @@ public class Program extends AbstractNode {
 					thatNode = thatNode - rules.get(i).size();
 					//narrowing down our probability
 				} else { // if rules.get(i).size(0 >= thatNode
-					rules.get(i).mutate();
+					rules.get(i).mutate(sb);
 					return this;
 					//we found the Rule that gets that mutation
 				}
@@ -83,13 +82,13 @@ public class Program extends AbstractNode {
 	}
 
 	@Override
-	public Node remove() {
-		return invalidMutationHandler(); // not supported for type Program
+	public Node remove(StringBuffer sb) {
+		return invalidMutationHandler(sb); // not supported for type Program
 	}
 
 	@Override
-	public Node swapOrder() {
-		mutdescription.append("The order of two rules has been switched.");
+	public Node swapOrder(StringBuffer sb) {
+		sb.append("The order of two rules has been switched.");
 		int pos1 = rand.nextInt(rules.size());
 		int offset = rand.nextInt(rules.size() - 1) + 1;
 		int pos2 = (pos1 + offset) % rules.size();
@@ -109,25 +108,25 @@ public class Program extends AbstractNode {
 	}
 
 	@Override
-	public Node cloneSubtree() {
-		return invalidMutationHandler();
+	public Node cloneSubtree(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// can't replace a Program with another Program;
 		// there is only one Program
 	}
 
 	@Override
-	public Node randomReplace() {
-		return invalidMutationHandler(); // can't replace a Program
+	public Node randomReplace(StringBuffer sb) {
+		return invalidMutationHandler(sb); // can't replace a Program
 	}
 
 	@Override
-	public Node newParent() {
-		return invalidMutationHandler(); // Program doesn't have a parent
+	public Node newParent(StringBuffer sb) {
+		return invalidMutationHandler(sb); // Program doesn't have a parent
 	}
 
 	@Override
-	public Node cloneKid() {
-		mutdescription.append("Mutation: a rule has been cloned.");
+	public Node cloneKid(StringBuffer sb) {
+		sb.append("Mutation: a rule has been cloned.");
 		int kidIndex = rand.nextInt(this.rules.size());
 		Rule kid = this.rules.get(kidIndex);
 		this.rules.add((Rule)kid.deepCopy()); //we copy the kid and add it
@@ -140,13 +139,13 @@ public class Program extends AbstractNode {
 	 * 
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		//reshuffle probability, due to invalid mutations
 		int randMutation = rand.nextInt(2);
 		if (randMutation == 0) {
-			return swapOrder();
+			return swapOrder(sb);
 		} else {
-			return cloneKid();
+			return cloneKid(sb);
 		}
 	}
 

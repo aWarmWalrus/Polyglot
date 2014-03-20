@@ -32,4 +32,4 @@ mem[5+3-10] = 20 --> mem[mem[2]] := 5 + 3 + random[9] * 5 + 38 - 938 + (69 / 94)
 3 * (3 - ahead[6 + 3]) <= 5 mod 6 --> attack;
 
 4 < 3 and {{6 != 3 or 3 + 3 < 3}} --> mem[6] := 0;
-{{(3-3) = 30 or 4 < 2} and 3 = 3} --> attack;
+{{(3-3) = 30 or 4 < 2} and 3 = 3} --> attack attack;

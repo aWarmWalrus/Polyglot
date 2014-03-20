@@ -50,7 +50,7 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	 * occur)
 	 */
 	public BinaryCondition(boolean bool) {
-
+		isTrue = bool;
 	}
 
 	@Override
@@ -60,18 +60,18 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	}
 
 	 @Override
-	 public Node mutate() {
+	 public Node mutate(StringBuffer sb) {
 		 int thatNode = rand.nextInt(this.size());
 			if (thatNode == 0) {
 				RuleSetMutation rm = new RuleSetMutation(this);
 				// the RuleSetMutation class takes care of probability
-				return rm.ruleMutation(); // calls mutation on the BinCondition
+				return rm.ruleMutation(sb); // calls mutation on the BinCondition
 			} else if (thatNode >= 1 && thatNode < left.size() + 1){
 				stackOfNodes.add(this);
-				left.mutate();
+				left.mutate(sb);
 			} else if (thatNode >= left.size() + 1 && thatNode < size()) {
 				stackOfNodes.add(this);
-				right.mutate();
+				right.mutate(sb);
 			} else {
 				System.out.println("This should not be reached");
 			}
@@ -79,7 +79,8 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	 }
 
 	@Override
-	public Node remove() {
+	public Node remove(StringBuffer sb) {
+		sb.append("Mutation: removed a binary condition node");
 		Node n = stackOfNodes.getLast(); //the parent
 		if (n instanceof Rule) {
 			if (rand.nextInt(1) == 0)
@@ -109,7 +110,8 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	}
 
 	@Override
-	public Node swapOrder() {
+	public Node swapOrder(StringBuffer sb) {
+		sb.append("Mutation: the order of two children of a binary condition were switched");
 		Condition temp = new BinaryCondition();
 		temp = this.left;
 		this.left = this.right;
@@ -118,7 +120,8 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	}
 
 	@Override
-	public Node cloneSubtree() {
+	public Node cloneSubtree(StringBuffer sb) {
+		sb.append("Mutation: cloned a subtree of a binary condition");
 		Program p = (Program) stackOfNodes.getFirst(); //should be a program
 		ArrayList<Condition> conditionList = new ArrayList<Condition>();
 		for (int i = 0; i < p.rules.size(); i++) {
@@ -150,18 +153,21 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	}
 
 	@Override
-	public Node randomReplace() {
+	public Node randomReplace(StringBuffer sb) {
+		sb.append("Mutation: randomly replaced a binary condition with a new one");
 		if (op.opvalue == 30) op = BinaryConditionOperator.AND;
 		else op = BinaryConditionOperator.OR;
 		return this;
 	}
 
 	@Override
-	public Node newParent() { //inserts a new BinaryCondition as a parent
+	public Node newParent(StringBuffer sb) { //inserts a new BinaryCondition as a parent
 		//just as a convention we have decided to insert make the current
 		//BinaryCondition the left child of the new parent as we see 
 		//little to no benefit in randomizing whether it becomes the left
 		//vs the right child.
+		
+		sb.append("Mutation: inserted a new parent for a condition node");
 		
 		Condition otherchild = new BinaryCondition();
 		Program p = (Program) stackOfNodes.getFirst(); //should be a program
@@ -199,8 +205,8 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	}
 
 	@Override
-	public Node cloneKid() {
-		return invalidMutationHandler();
+	public Node cloneKid(StringBuffer sb) {
+		return invalidMutationHandler(sb);
 		// BinaryCondition does not have a variable amount of Children
 	}
 
@@ -210,18 +216,18 @@ public class BinaryCondition extends AbstractNode implements Condition {
 	 * 
 	 * @return a mutated Node
 	 */
-	private Node invalidMutationHandler() {
+	private Node invalidMutationHandler(StringBuffer sb) {
 		int randMutation = rand.nextInt(5);
 		if (randMutation == 0)
-			return remove();
+			return remove(sb);
 		else if (randMutation == 1) 
-			return swapOrder();
+			return swapOrder(sb);
 		else if (randMutation == 2) 
-			return cloneSubtree();
+			return cloneSubtree(sb);
 		else if (randMutation == 3)
-			return randomReplace();
+			return randomReplace(sb);
 		else
-			return newParent();
+			return newParent(sb);
 		
 	}
 	
